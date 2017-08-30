@@ -6,15 +6,35 @@ export default class DecisionContainer extends Component {
     super();
 
     this.state = {
-      decision: ""
+      decision: "",
+      outcomes: [],
+      pros: [],
+      cons: []
     }
+    // or nested object? which is easiest to manage?
+
+    // {
+    //   decision: {
+    //     content: "",
+    //     outcomes: [
+    //       content: "",
+    //       pros: [],
+    //       cons: []
+    //     ]
+    //   }
+    // }
   }
 
   getDecision = (decision) => {
     this.setState({ decision }, () => { console.log(this.state.decision) })
-    // post request to save decision
-    // decision form disappears, form input becomes text box
-      // possible outcomes form appears
+    // save decision to state => make into text box
+      // possible outcomes form appears, store in outcomes array
+
+        // associate outcomes with decision id?
+  }
+
+  getOutcomes = () => {
+    console.log("in get outcomes")
   }
 
   render(){

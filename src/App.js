@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
+import Login from './components/Login'
 import DecisionContainer from './components/DecisionContainer'
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <DecisionContainer/>
+        {/* <Login /> */}
+        <DecisionContainer />
         {/* <Login />
         <Signup /> */}
       </div>
@@ -21,4 +23,4 @@ class App extends Component {
 
 export default App;
 
-//conditional here telling what to render 
+//conditional here telling what to render

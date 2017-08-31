@@ -14,8 +14,6 @@ class App extends Component {
       <div className="App">
         {/* <Login /> */}
         <DecisionContainer />
-        {/* <Login />
-        <Signup /> */}
       </div>
     );
   }
@@ -23,4 +21,4 @@ class App extends Component {
 
 export default App;
 
-//conditional here telling what to render
+//conditional here telling what to render - login/signup

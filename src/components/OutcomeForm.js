@@ -8,8 +8,9 @@ export default class OutcomeForm extends Component {
 
     this.state = {
       showPCForm: false,
-      outcomeInput: "",
-      disabled: false
+      content: "",
+      disabled: false,
+      buttonVisibility: true
     }
   }
 
@@ -17,13 +18,20 @@ export default class OutcomeForm extends Component {
     e.preventDefault();
     this.setState({
       showPCForm: !this.state.showProConForm ,
-      disabled: !this.state.disabled
+      disabled: !this.state.disabled,
+      buttonVisibility: !this.state.buttonVisibility,
     })
   }
 
   handleChange = (e) => {
-    let outcomeInput = e.target.value
-    this.setState({ outcomeInput })
+    let content = e.target.value
+    this.setState({ content })
+  }
+
+  // for every pro --> render badges
+  // for every con --> render other badge
+  getOpinions = (pros, cons) => {
+    console.log(pros, cons)
   }
 
   render (){
@@ -31,17 +39,16 @@ export default class OutcomeForm extends Component {
       <div>
         <Form onSubmit={this.handleSubmit} >
           <Form.Field>
-            <h1><label>POSSIBLE OUTCOME</label></h1>
+            <h1><label>OUTCOME</label></h1>
             <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={150} autoHeight placeholder='Possible outcomes...' type="text" onChange={this.handleChange}/> <i className="pencil"></i>
-            <Button circular icon='add' />
+            {this.state.buttonVisibility && <Button circular icon='add' />}
           </Form.Field>
         </Form>
-        {this.state.showPCForm && <PCForm />}
+        {this.state.showPCForm && <PCForm getOpinions={this.getOpinions}/>}
       </div>
     )
   }
 }
 
-
-// can enable spellcheck?
-// when click add --> add pros and cons to option item(accordion), so can drag and drop to organize
+// can enable spellcheck?/validate for empty fields
+// move add button after click

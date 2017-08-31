@@ -7,22 +7,9 @@ export default class DecisionContainer extends Component {
 
     this.state = {
       decision: "",
-      outcomes: [],
-      pros: [],
-      cons: []
+      outcome: { content: "", pros: [{items: ""}], cons: [{items: ""}]}
     }
-    // or nested object? which is easiest to manage?
-
-    // {
-    //   decision: {
-    //     content: "",
-    //     outcomes: [
-    //       content: "",
-    //       pros: [],
-    //       cons: []
-    //     ]
-    //   }
-    // }
+    // what's best way to store this shit in state? 
   }
 
   getDecision = (decision) => {

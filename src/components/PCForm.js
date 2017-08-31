@@ -1,48 +1,62 @@
 import React, { Component } from 'react'
-import { Form, Button, Icon } from 'semantic-ui-react'
-import Pro from './Pro'
-import Con from './Con'
-
+import { Form, Button, Icon, Input } from 'semantic-ui-react'
 
 export default class PCForm extends Component {
   constructor() {
     super();
 
     this.state = {
+      text: "",
       pros: [],
       cons: []
     }
   }
 
-  handleSubmit = (e) => {
-    console.log("in handle submit", e.target.value)
+  addProForm = () => {
+    // if(pro) ? set pro state : else set con state
+    // first element in array is an empty string
+    this.setState({ pros: [...this.state.pros, '']})
   }
 
-  handleChange = (e) => {
-    console.log(e.target.value)
+  addProToState = (e) => {
+    let pro = this.state.text
+    this.setState({ pros: [...this.state.pros, pro]}, () => {
+      console.log("new pro addded", this.state.pros)
+    })
+    // make it disappear
+    // make a badge appear --> pass pros and cons to OutcomeForm?
+    let pros = this.state.pros
+    let cons = this.state.cons
+    this.props.getOpinions(pros, cons)
+  }
+
+  handlePro = (idx) => (event) => {
+    let text = event.target.value
+    this.setState({ text })
   }
 
   render() {
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-          <Form.Group>
-            PRO
-            <Pro />
-            CON
-            <Con />
-          </Form.Group>
-          <Button type='submit'>Submit</Button>
-        </Form>
+      <div className="pro-con-form">
+        <h4>ADD PRO OR CON</h4>
+        <Button icon onClick={this.addProForm}>
+          <Icon name='pointing up' />
+        </Button>
+        <Button icon onClick={this.addConForm}>
+          <Icon name='pointing down' />
+        </Button>
+          {this.state.pros.map((pro, idx) => <div className="pro" key={idx}>
+          <Input type="text" placeholder='Pro...' onChange={this.handlePro(idx)}/>
+          <Button basic color='black' onClick={this.addProToState}>ADD</Button>
+        </div>)}
       </div>
     )
   }
 }
 
-
-
+// change the form field based on click of pro or con
+//check to make sure field is not empty before submitting
 // dynamically generate these and number them using index + 1
-// pro/con item should be a dummy component
   // once submit, they become a badge
     // click on badge to see pros/cons -> badge counts how many of each
 // add icons to forms -> add, edit, delete

@@ -28,8 +28,6 @@ export default class OutcomeForm extends Component {
     this.setState({ content })
   }
 
-  // for every pro --> render badges
-  // for every con --> render other badge
   getOpinions = (pros, cons) => {
     console.log(pros, cons)
   }

@@ -36,7 +36,6 @@ export default class DecisionList extends Component {
           <Form.Field>
             <h1><label>DECISION</label></h1>
               <div className="decision-bar">
-              <i className="search icon"></i>
               <TextArea spellCheck="true"  disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Enter your decision...' type="text" onChange={this.handleChange}/>
               {this.state.buttonVisibility && <Button circular icon='add' />}
             </div>

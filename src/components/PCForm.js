@@ -1,58 +1,75 @@
 import React, { Component } from 'react'
-import { Form, Button, Icon, Input } from 'semantic-ui-react'
+import { Form, Button, Icon, Input, Grid } from 'semantic-ui-react'
+import Pro from './Pro'
+import Con from './Con'
 
 export default class PCForm extends Component {
   constructor() {
     super();
 
     this.state = {
-      text: "",
+      showProForm: false,
+      showConForm: false,
       pros: [],
       cons: []
     }
   }
 
-  addProForm = () => {
-    // if(pro) ? set pro state : else set con state
-    // first element in array is an empty string
-    this.setState({ pros: [...this.state.pros, '']})
+  handleProClick = () => {
+    this.setState({ pros: [this.state.pros]})
   }
 
-  addProToState = (e) => {
-    let pro = this.state.text
-    this.setState({ pros: [...this.state.pros, pro]}, () => {
-      console.log("new pro addded", this.state.pros)
+  handleConClick = () => {
+    this.setState({ cons: [this.state.cons]})
+  }
+
+  addPro = (pro) => {
+    console.log("in add pro")
+    this.setState({ pros: [...this.state.pros, pro] }, () => {
+      console.log("in add pro", this.state.pros)
     })
-    // make it disappear
-    // make a badge appear --> pass pros and cons to OutcomeForm?
-    let pros = this.state.pros
-    let cons = this.state.cons
-    this.props.getOpinions(pros, cons)
+    // this.props.getOpinions(pros, cons)
   }
 
-  handlePro = (idx) => (event) => {
-    let text = event.target.value
-    this.setState({ text })
+  addCon = (con) => {
+    this.setState({ cons: [...this.state.cons, con] }, () => {
+      console.log("in add con", this.state.cons)
+    })
+  }
+
+  handleProClick = (e) => {
+    this.setState({ showProForm: !this.state.showProForm })
+  }
+
+  handleConClick = (e) => {
+    this.setState({ showConForm: !this.state.showConForm })
   }
 
   render() {
     return (
       <div className="pro-con-form">
-        <h4>ADD PRO OR CON</h4>
-        <Button icon onClick={this.addProForm}>
-          <Icon name='pointing up' />
+        <h4>PRO | CON</h4>
+        <Button icon onClick={this.handleProClick}>
+          <Icon name='like outline' value="pro"/>
         </Button>
-        <Button icon onClick={this.addConForm}>
-          <Icon name='pointing down' />
+        <Button icon onClick={this.handleConClick}>
+          <Icon name='dislike outline' value="con"/>
         </Button>
-          {this.state.pros.map((pro, idx) => <div className="pro" key={idx}>
-          <Input type="text" placeholder='Pro...' onChange={this.handlePro(idx)}/>
-          <Button basic color='black' onClick={this.addProToState}>ADD</Button>
-        </div>)}
+        <Grid>
+          <Grid.Row>
+          <Grid.Column width={8}>
+            {this.state.showProForm && <Pro pros={this.state.pros} handlePro={this.handlePro} addPro={this.addPro}/>}
+          </Grid.Column>
+          <Grid.Column width={8}>
+            {this.state.showConForm && <Con cons={this.state.cons} handleCon={this.handleCon} addCon={this.addCon}/>}
+          </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     )
   }
 }
+
 
 // change the form field based on click of pro or con
 //check to make sure field is not empty before submitting

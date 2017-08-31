@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Icon, Input, Grid } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 import Pro from './Pro'
 import Con from './Con'
 
@@ -10,23 +10,7 @@ export default class PCForm extends Component {
     this.state = {
       showProForm: false,
       showConForm: false,
-      pros: [],
-      cons: []
     }
-  }
-  
-  addPro = (pro) => {
-    console.log("in add pro")
-    this.setState({ pros: [...this.state.pros, pro] }, () => {
-      console.log("in add pro", this.state.pros)
-    })
-    // this.props.getOpinions(pros, cons)
-  }
-
-  addCon = (con) => {
-    this.setState({ cons: [...this.state.cons, con] }, () => {
-      console.log("in add con", this.state.cons)
-    })
   }
 
   handleProClick = (e) => {
@@ -37,23 +21,38 @@ export default class PCForm extends Component {
     this.setState({ showConForm: !this.state.showConForm })
   }
 
+  handleNewOutcome = () => {
+    console.log("handle new outcome form")
+    // tell DecisionList to render another Outcome Form
+  }
+
+  handleSaveClick = () => {
+    console.log("In save")
+  }
+
   render() {
     return (
       <div className="pro-con-form">
-        <h4>PRO | CON</h4>
         <Button icon onClick={this.handleProClick}>
-          <Icon name='like outline' value="pro"/>
+          + pro
         </Button>
         <Button icon onClick={this.handleConClick}>
-          <Icon name='dislike outline' value="con"/>
+          + con
+        </Button>
+        <Button icon onClick={this.handleSaveClick}>
+          SAVE
+        </Button>
+        <Button icon onClick={this.handleNewOutcome}>
+          + new outcome
+          {/* render OutcomeForm */}
         </Button>
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>
-            {this.state.showProForm && <Pro pros={this.state.pros} handlePro={this.handlePro} addPro={this.addPro}/>}
+            {this.state.showProForm && <Pro pros={this.props.pros} addPro={this.props.addPro}/>}
           </Grid.Column>
           <Grid.Column width={8}>
-            {this.state.showConForm && <Con cons={this.state.cons} handleCon={this.handleCon} addCon={this.addCon}/>}
+            {this.state.showConForm && <Con cons={this.props.cons}  addCon={this.props.addCon}/>}
           </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -62,10 +61,8 @@ export default class PCForm extends Component {
   }
 }
 
+// on click show buttons and grid or OutcomeForm
 
-// change the form field based on click of pro or con
 //check to make sure field is not empty before submitting
-// dynamically generate these and number them using index + 1
-  // once submit, they become a badge
-    // click on badge to see pros/cons -> badge counts how many of each
+// click on badge to see pros/cons -> badge counts how many of each
 // add icons to forms -> add, edit, delete

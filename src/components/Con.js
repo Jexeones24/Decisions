@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Icon, Input, Grid } from 'semantic-ui-react'
+import { Button, Input } from 'semantic-ui-react'
 
 export default class Con extends Component {
   constructor(){
@@ -24,7 +24,6 @@ export default class Con extends Component {
   render() {
     return (
       <div className="con-item">
-        CON
         <Input type="text" placeholder='Con...' onChange={this.handleChange} value={this.state.text}/>
         <Button basic color='black' onClick={this.handleClick}>ADD</Button>
       </div>

@@ -29,19 +29,23 @@ export default class DecisionList extends Component {
     this.setState({ input })
   }
 
+  newOutcomeForm = () => {
+    this.setState({ newOutcomeForm: !this.state.newOutcomeForm })
+  }
+
   render() {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <h1><label>DECISION</label></h1>
+            <h1><label>WHAT ARE YOU TRYING TO DECIDE?</label></h1>
               <div className="decision-bar">
-              <TextArea spellCheck="true"  disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Enter your decision...' type="text" onChange={this.handleChange}/>
-              {this.state.buttonVisibility && <Button circular icon='add' />}
+              <TextArea spellCheck="true"  disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" onChange={this.handleChange}/>
+              {this.state.buttonVisibility && <Button icon='add' />}
             </div>
           </Form.Field>
         </Form>
-        {this.state.showOutcomeForm && <OutcomeForm />}
+        {this.state.showOutcomeForm && <OutcomeForm/>}
       </div>
     )
   }

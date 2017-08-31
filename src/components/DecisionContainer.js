@@ -7,22 +7,18 @@ export default class DecisionContainer extends Component {
 
     this.state = {
       decision: "",
-      outcome: { content: "", pros: [{items: ""}], cons: [{items: ""}]}
+      outcomes: [],
+      opinions: [],
+      // pros: [],
+      // cons: []
     }
-    // what's best way to store this shit in state? 
   }
 
   getDecision = (decision) => {
     this.setState({ decision }, () => { console.log(this.state.decision) })
-    // save decision to state => make into text box
-      // possible outcomes form appears, store in outcomes array
-
-        // associate outcomes with decision id?
   }
 
-  getOutcomes = () => {
-    console.log("in get outcomes")
-  }
+  // make adapter post requests??
 
   render(){
     return (

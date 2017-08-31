@@ -14,15 +14,7 @@ export default class PCForm extends Component {
       cons: []
     }
   }
-
-  handleProClick = () => {
-    this.setState({ pros: [this.state.pros]})
-  }
-
-  handleConClick = () => {
-    this.setState({ cons: [this.state.cons]})
-  }
-
+  
   addPro = (pro) => {
     console.log("in add pro")
     this.setState({ pros: [...this.state.pros, pro] }, () => {

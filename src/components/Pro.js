@@ -18,13 +18,14 @@ export default class Pro extends Component {
   handleClick = (e) => {
     e.preventDefault();
     this.props.addPro(this.state.text)
+    this.setState({ text: "" })
   }
 
   render() {
     return (
       <div className="con-item">
         PRO
-        <Input type="text" placeholder='Pro...' onChange={this.handleChange}/>
+        <Input type="text" placeholder='Pro...' onChange={this.handleChange} value={this.state.text} />
         <Button basic color='black' onClick={this.handleClick}>ADD</Button>
       </div>
     )

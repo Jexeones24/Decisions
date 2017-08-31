@@ -18,13 +18,14 @@ export default class Con extends Component {
   handleClick = (e) => {
     e.preventDefault();
     this.props.addCon(this.state.text)
+    this.setState({ text: "" })
   }
 
   render() {
     return (
       <div className="con-item">
         CON
-        <Input type="text" placeholder='Con...' onChange={this.handleChange}/>
+        <Input type="text" placeholder='Con...' onChange={this.handleChange} value={this.state.text}/>
         <Button basic color='black' onClick={this.handleClick}>ADD</Button>
       </div>
     )

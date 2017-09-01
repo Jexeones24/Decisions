@@ -1,30 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react'
 
-const OpinionList = ({ pros, cons }) => {
+export default class OpinionList extends Component {
 
-  const handleClick = () => {
-    return(
-      console.log("delete me")
-    )
+  handleClick = (e, value) => {
+    console.log(e)
+    console.log(value)
+    this.props.delete(e)
   }
 
-  return (
-    <div className="opinion-list">
-      <Grid>
-        <Grid.Row>
-        <Grid.Column width={8}>
-          {pros.map((pro, i) => <p key={i}>{pro} <button onClick={handleClick}>-</button></p>)}
-        </Grid.Column>
-        <Grid.Column width={8}>
-          {cons.map((con, i) => <p key={i}>{con} <button onClick={handleClick}>-</button></p>)}
-        </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-  )
+  render() {
+    return (
+      <div className="opinion-list">
+        <Grid>
+          <Grid.Row>
+          <Grid.Column width={8}>
+            {this.props.pros.map((pro, i) => <p key={i}>{pro} <button onClick={this.handleClick.bind(this, i)}>-</button></p>)}
+          </Grid.Column>
+          <Grid.Column width={8}>
+            {this.props.cons.map((con, i) => <p key={i}>{con} <button onClick={this.handleClick.bind(this, con)}>-</button></p>)}
+          </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+    )
+  }
 }
 
-export default OpinionList
 
 // should this be a container for list items???

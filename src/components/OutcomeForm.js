@@ -58,8 +58,9 @@ export default class OutcomeForm extends Component {
     this.setState({ content })
   }
 
-  handleClick = () => {
-    // display
+  handleDelete = (e) => {
+    console.log("in delete, OutcomeForm")
+    
   }
 
   render (){
@@ -85,7 +86,7 @@ export default class OutcomeForm extends Component {
         </Form>
         {this.state.showPCForm && <PCForm incrementBadge={this.incrementBadge} addPro={this.addPro} addCon={this.addCon} pros={this.state.pros} cons={this.state.cons}/>}
         <div className="opinion-list">
-          <OpinionList pros={this.state.pros} cons={this.state.cons}/>
+        <OpinionList pros={this.state.pros} cons={this.state.cons} delete={this.handleDelete}/>
         </div>
       </div>
     )

@@ -9,8 +9,6 @@ export default class DecisionContainer extends Component {
       decision: "",
       outcomes: [],
       opinions: [],
-      // pros: [],
-      // cons: []
     }
   }
 
@@ -18,7 +16,9 @@ export default class DecisionContainer extends Component {
     this.setState({ decision }, () => { console.log(this.state.decision) })
   }
 
-  // make adapter post requests??
+  // postDecision = () => {
+  //   post to db
+  // }
 
   render(){
     return (
@@ -28,5 +28,3 @@ export default class DecisionContainer extends Component {
     )
   }
 }
-
-// else show results page

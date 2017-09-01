@@ -13,11 +13,11 @@ export default class PCForm extends Component {
     }
   }
 
-  handleProClick = (e) => {
+  handlePro = (e) => {
     this.setState({ showProForm: !this.state.showProForm })
   }
 
-  handleConClick = (e) => {
+  handleCon = (e) => {
     this.setState({ showConForm: !this.state.showConForm })
   }
 
@@ -26,20 +26,31 @@ export default class PCForm extends Component {
     // tell DecisionList to render another Outcome Form
   }
 
-  handleSaveClick = () => {
+  handleSave = () => {
     console.log("In save")
+  }
+
+
+  handleAddPro = (pro) => {
+    this.props.addPro(pro)
+    this.setState({ showProForm: !this.state.showProForm })
+  }
+
+  handleAddCon = (con) => {
+    this.props.addCon(con)
+    this.setState({ showConForm: !this.state.showConForm })
   }
 
   render() {
     return (
       <div className="pro-con-form">
-        <Button icon onClick={this.handleProClick}>
+        <Button icon onClick={this.handlePro}>
           + pro
         </Button>
-        <Button icon onClick={this.handleConClick}>
+        <Button icon onClick={this.handleCon}>
           + con
         </Button>
-        <Button icon onClick={this.handleSaveClick}>
+        <Button icon onClick={this.handleSave}>
           SAVE
         </Button>
         <Button icon onClick={this.handleNewOutcome}>
@@ -49,10 +60,10 @@ export default class PCForm extends Component {
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>
-            {this.state.showProForm && <Pro pros={this.props.pros} addPro={this.props.addPro}/>}
+            {this.state.showProForm && <Pro pros={this.props.pros} addPro={this.handleAddPro}/>}
           </Grid.Column>
           <Grid.Column width={8}>
-            {this.state.showConForm && <Con cons={this.props.cons}  addCon={this.props.addCon}/>}
+            {this.state.showConForm && <Con cons={this.props.cons}  addCon={this.handleAddCon}/>}
           </Grid.Column>
           </Grid.Row>
         </Grid>

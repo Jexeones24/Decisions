@@ -8,6 +8,7 @@ export default class DecisionContainer extends Component {
   constructor() {
     super();
 
+    // all decisions are being saved - why?
     this.state = {
       decision: [],
       outcomes: [],
@@ -15,12 +16,34 @@ export default class DecisionContainer extends Component {
     }
   }
 
+
   // currentUser_id is harcoded
   createDecision = (content) => {
     DecisionAdapter.createDecision(content)
       .then( decision => this.setState({
         decision }, () => {console.log("id:", this.state.decision.id, "decision:", this.state.decision)}
       )
+    )
+  }
+
+  deleteDecision = () => {
+    console.log("deleting", this.state.decision)
+    let id = this.state.decision.id
+    DecisionAdapter.deleteDecision(id)
+      //am i missing a .then?
+    this.setState({ decision: [] }, () => {
+      console.log(this.state.decision)
+    })
+  }
+
+  editDecision = (content) => {
+    console.log("editing", this.state.decision, "content:", content)
+    let id = this.state.decision.id
+    console.log(id)
+    DecisionAdapter.editDecision(content, id)
+      .then( newDecision => this.setState({
+      decision: newDecision
+      }, () => { console.log(this.state.decision)})
     )
   }
 
@@ -42,10 +65,11 @@ export default class DecisionContainer extends Component {
     )
   }
 
+
   render(){
     return (
       <div className="decision-container">
-        <DecisionList createDecision={this.createDecision} createOutcome={this.createOutcome} createOpinions={this.createOpinions}/>
+        <DecisionList createDecision={this.createDecision} createOutcome={this.createOutcome} createOpinions={this.createOpinions} deleteDecision={this.deleteDecision} editDecision={this.editDecision}/>
       </div>
     )
   }

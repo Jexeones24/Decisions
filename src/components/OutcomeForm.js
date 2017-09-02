@@ -21,7 +21,7 @@ export default class OutcomeForm extends Component {
     }
   }
 
-  // adds pro to state and increments
+  
   addPro = (pro, value) => {
     var value = true
     this.setState({ pros: [...this.state.pros, pro]}, () => {

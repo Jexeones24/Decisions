@@ -13,23 +13,16 @@ export default class PCForm extends Component {
     }
   }
 
-  handlePro = (e) => {
-    this.setState({ showProForm: !this.state.showProForm })
-  }
 
-  handleCon = (e) => {
-    this.setState({ showConForm: !this.state.showConForm })
-  }
-
-  handleNewOutcome = () => {
-    console.log("handle new outcome form")
-    // tell DecisionList to render another Outcome Form
-  }
-
-  handleSave = () => {
-    console.log("In save")
-    // buttons and opinions disappear (but are stored in clickable stats)
-    // send info back to decision container
+  handleClick = (e) => {
+    let type = e.target.value
+    if(type === "pro"){
+      this.setState({ showProForm: !this.state.showProForm })
+    } else if(type === "con"){
+      this.setState({ showConForm: !this.state.showConForm })
+    } else {
+      console.log("new outcome")
+    }
   }
 
 
@@ -43,24 +36,17 @@ export default class PCForm extends Component {
     this.setState({ showConForm: !this.state.showConForm })
   }
 
-  // make OpinionContainer
-  // hand it getOPinions
-  // save opinions with a value: true/false
-
 
   render() {
     return (
       <div className="pro-con-form">
-        <Button icon onClick={this.handlePro}>
-          + pro
+        <Button icon onClick={this.handleClick} value="pro">
+          + reward
         </Button>
-        <Button icon onClick={this.handleCon}>
-          + con
+        <Button icon onClick={this.handleClick} value="con">
+          + risk
         </Button>
-        <Button icon onClick={this.handleSave}>
-          SAVE
-        </Button>
-        <Button icon onClick={this.handleNewOutcome}>
+        <Button icon onClick={this.handleClick} value="new-outcome">
           + new outcome
           {/* render OutcomeForm */}
         </Button>
@@ -79,7 +65,6 @@ export default class PCForm extends Component {
   }
 }
 
-// on click show buttons and grid or OutcomeForm
 
 //check to make sure field is not empty before submitting
 // click on badge to see pros/cons -> badge counts how many of each

@@ -9,39 +9,56 @@ export default class DecisionList extends Component {
     this.state = {
       content: "",
       showOutcomeForm: false,
-      buttonVisibility: true,
-      disabled: false
+      disabled: false,
+      editable: false
     }
   }
 
-  handleSubmit = (e) => {
+  handleAdd = (e) => {
     e.preventDefault();
     this.setState({
       showOutcomeForm: !this.state.showOutcomeForm,
-      buttonVisibility: !this.state.buttonVisibility,
+      editable: !this.state.editable,
       disabled: !this.state.disabled
     })
     this.props.createDecision(this.state.content)
   }
 
+
   handleChange = (e) => {
+    console.log(e.target.value)
     let content = e.target.value
     this.setState({ content })
   }
 
-  newOutcomeForm = () => {
-    this.setState({ newOutcomeForm: !this.state.newOutcomeForm })
+
+  handleDelete = () => {
+    this.props.deleteDecision()
+    this.setState({ content: "" }, () => {
+      console.log(this.state.content)}
+    )
+    // clear input field
+  }
+
+  // button doesn't toggle
+  handleEdit = () => {
+    let content = this.state.content
+    this.setState({ disabled: !this.state.disabled }, () => { console.log("disabled:", this.state.disabled, "content:", this.state.content)})
+    this.props.editDecision(content)
   }
 
   render() {
+    var decision = this.state.editable ? <TextArea disabled="" maxLength={200} autoHeight defaultValue='Should I...' type="text" onChange={this.handleChange}/> : <h3>{this.state.content}</h3>
+
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <Form.Field>
             <h1><label>WHAT'S YOUR LIFE'S STRIFE?</label></h1>
               <div className="decision-bar">
-              <TextArea spellCheck="true"  disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" onChange={this.handleChange}/>
-              {this.state.buttonVisibility && <Button icon='add' />}
+                <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" value={this.state.content} onChange={this.handleChange}/>
+                {(this.state.editable === false) ? <Button icon='add' onClick={this.handleAdd}/>
+                : <div className="edit-delete-buttons"><Button icon='delete' onClick={this.handleDelete}/><Button toggle active={!this.state.editable} icon='edit' onClick={this.handleEdit}/></div>}
             </div>
           </Form.Field>
         </Form>
@@ -50,6 +67,12 @@ export default class DecisionList extends Component {
     )
   }
 }
+
+
+
+
+
+
 
 
 // limit characters

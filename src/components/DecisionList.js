@@ -7,7 +7,7 @@ export default class DecisionList extends Component {
     super();
 
     this.state = {
-      input: "",
+      content: "",
       showOutcomeForm: false,
       buttonVisibility: true,
       disabled: false
@@ -21,12 +21,12 @@ export default class DecisionList extends Component {
       buttonVisibility: !this.state.buttonVisibility,
       disabled: !this.state.disabled
     })
-    this.props.getDecision(this.state.input)
+    this.props.createDecision(this.state.content)
   }
 
   handleChange = (e) => {
-    let input = e.target.value
-    this.setState({ input })
+    let content = e.target.value
+    this.setState({ content })
   }
 
   newOutcomeForm = () => {
@@ -38,14 +38,14 @@ export default class DecisionList extends Component {
       <div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <h1><label>WHAT ARE YOU TRYING TO DECIDE?</label></h1>
+            <h1><label>WHAT'S YOUR LIFE'S STRIFE?</label></h1>
               <div className="decision-bar">
               <TextArea spellCheck="true"  disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" onChange={this.handleChange}/>
               {this.state.buttonVisibility && <Button icon='add' />}
             </div>
           </Form.Field>
         </Form>
-        {this.state.showOutcomeForm && <OutcomeForm/>}
+        {this.state.showOutcomeForm && <OutcomeForm createOutcome={this.props.createOutcome} createOpinions={this.props.createOpinions}/>}
       </div>
     )
   }

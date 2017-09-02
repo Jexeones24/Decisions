@@ -28,6 +28,8 @@ export default class PCForm extends Component {
 
   handleSave = () => {
     console.log("In save")
+    // buttons and opinions disappear (but are stored in clickable stats)
+    // send info back to decision container
   }
 
 
@@ -40,6 +42,11 @@ export default class PCForm extends Component {
     this.props.addCon(con)
     this.setState({ showConForm: !this.state.showConForm })
   }
+
+  // make OpinionContainer
+  // hand it getOPinions
+  // save opinions with a value: true/false
+
 
   render() {
     return (
@@ -60,10 +67,10 @@ export default class PCForm extends Component {
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>
-            {this.state.showProForm && <Pro pros={this.props.pros} addPro={this.handleAddPro}/>}
+            {this.state.showProForm && <Pro pros={this.props.pros} addPro={this.handleAddPro} createOpinions={this.props.createOpinions}/>}
           </Grid.Column>
           <Grid.Column width={8}>
-            {this.state.showConForm && <Con cons={this.props.cons}  addCon={this.handleAddCon}/>}
+            {this.state.showConForm && <Con cons={this.props.cons}  addCon={this.handleAddCon} createOpinions={this.props.createOpinions}/>}
           </Grid.Column>
           </Grid.Row>
         </Grid>

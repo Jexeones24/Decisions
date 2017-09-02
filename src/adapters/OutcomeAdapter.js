@@ -1,0 +1,23 @@
+const path = "http://localhost:3000/api/v1/outcomes"
+
+export default class OutcomeAdapter {
+
+  static createOutcome(content, decision_id){
+    return fetch(path, {
+      method: 'post',
+      headers: headers(),
+      body: JSON.stringify({
+        content: content,
+        decision_id: decision_id,
+      })
+    })
+    .then(resp => resp.json())
+  }
+}
+
+let headers = () => {
+  return {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+}

@@ -15,10 +15,11 @@ export default class Pro extends Component {
     this.setState({ text })
   }
 
-  handleClick = (e) => {
-    e.preventDefault();
+  handleClick = () => {
+    let value = true
     this.props.addPro(this.state.text)
     this.setState({ text: "" })
+    this.props.createOpinions(this.state.text, value)
   }
 
   render() {

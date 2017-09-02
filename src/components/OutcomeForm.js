@@ -21,25 +21,24 @@ export default class OutcomeForm extends Component {
     }
   }
 
-  addPro = (pro, flag) => {
-    var flag = "pro"
-    this.setState({ pros: [...this.state.pros, pro] }, () => {
-      console.log("in add pro", this.state.pros)
-      this.incrementBadge(pro, flag)
+  // adds pro to state and increments
+  addPro = (pro, value) => {
+    var value = true
+    this.setState({ pros: [...this.state.pros, pro]}, () => {
+      this.incrementBadge(pro, value)
     })
   }
 
 
-  addCon = (con, flag) => {
-    var flag = "con"
-    this.setState({ cons: [...this.state.cons, con] }, () => {
-      console.log("in add con", this.state.cons)
-      this.incrementBadge(con, flag)
+  addCon = (con, value) => {
+    var value = false
+    this.setState({ cons: [...this.state.cons, con]}, () => {
+      this.incrementBadge(con, value)
     })
   }
 
-  incrementBadge = (opinion, flag) => {
-    (flag === "pro") ?
+  incrementBadge = (opinion, value) => {
+    (value === true) ?
     this.setState({ noOfPros: this.state.noOfPros + 1}) :
     this.setState({ noOfCons: this.state.noOfCons + 1})
   }
@@ -54,13 +53,15 @@ export default class OutcomeForm extends Component {
   }
 
   handleChange = (e) => {
-    let content = e.target.value
-    this.setState({ content })
+    this.setState({ content: e.target.value })
+  }
+
+  handleClick = () => {
+    this.props.createOutcome(this.state.content)
   }
 
   handleDelete = (e) => {
-    console.log("in delete, OutcomeForm")
-    
+    console.log("in handle delete", e)
   }
 
   render (){
@@ -68,23 +69,23 @@ export default class OutcomeForm extends Component {
       <div>
         <Form onSubmit={this.handleSubmit} >
           <Form.Field>
-            <h1><label>POSSIBLE OUTCOME</label></h1>
+            <h1><label>CHOICES</label></h1>
             <List link>
             <h4>STATS</h4>
             <Label>
-              <List.Item as='a' onClick={this.handleClick}>Pros</List.Item>
+              <List.Item as='a'>Pros</List.Item>
               <Label.Detail>{this.state.noOfPros}</Label.Detail>
             </Label>
             <Label>
-              <List.Item as='a' onClick={this.handleClick}>Cons</List.Item>
+              <List.Item as='a'>Cons</List.Item>
               <Label.Detail>{this.state.noOfCons}</Label.Detail>
             </Label>
             </List>
-            <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={150} autoHeight placeholder='Possible outcomes...' type="text" onChange={this.handleChange}/> <i className="pencil"></i>
-            {this.state.buttonVisibility && <Button icon='add' />}
+            <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={150} autoHeight placeholder='Possible outcomes...' type="text" onChange={this.handleChange}/>
+            {this.state.buttonVisibility && <Button icon='add' onClick={this.handleClick} />}
           </Form.Field>
         </Form>
-        {this.state.showPCForm && <PCForm incrementBadge={this.incrementBadge} addPro={this.addPro} addCon={this.addCon} pros={this.state.pros} cons={this.state.cons}/>}
+        {this.state.showPCForm && <PCForm incrementBadge={this.incrementBadge} addPro={this.addPro} addCon={this.addCon} pros={this.state.pros} cons={this.state.cons} createOpinions={this.props.createOpinions}/>}
         <div className="opinion-list">
         <OpinionList pros={this.state.pros} cons={this.state.cons} delete={this.handleDelete}/>
         </div>

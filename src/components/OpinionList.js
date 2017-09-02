@@ -3,9 +3,7 @@ import { Grid } from 'semantic-ui-react'
 
 export default class OpinionList extends Component {
 
-  handleClick = (e, value) => {
-    console.log(e)
-    console.log(value)
+  handleClick = (e) => {
     this.props.delete(e)
   }
 
@@ -15,7 +13,7 @@ export default class OpinionList extends Component {
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>
-            {this.props.pros.map((pro, i) => <p key={i}>{pro} <button onClick={this.handleClick.bind(this, i)}>-</button></p>)}
+            {this.props.pros.map((pro, i) => <p key={i}>{pro} <button onClick={this.handleClick.bind(this, pro)}>-</button></p>)}
           </Grid.Column>
           <Grid.Column width={8}>
             {this.props.cons.map((con, i) => <p key={i}>{con} <button onClick={this.handleClick.bind(this, con)}>-</button></p>)}

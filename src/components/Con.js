@@ -15,10 +15,11 @@ export default class Con extends Component {
     this.setState({ text })
   }
 
-  handleClick = (e) => {
-    e.preventDefault();
+  handleClick = () => {
+    let value = false
     this.props.addCon(this.state.text)
     this.setState({ text: "" })
+    this.props.createOpinions(this.state.text, value)
   }
 
   render() {

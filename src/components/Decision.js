@@ -18,7 +18,6 @@ export default class Decision extends Component {
   }
 
   getDecisionId = (decisionId) => {
-    console.log("decision id:", decisionId)
     this.setState({
       outcomeFormVisible: !this.state.outcomeFormVisible,
       decisionId: decisionId })
@@ -37,14 +36,16 @@ export default class Decision extends Component {
             decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
             getDecisionId={this.getDecisionId}/>)}
         </div>
-        {this.state.outcomeFormVisible ? <Outcome
+        {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}
           editOutcome={this.props.editOutcome}
-          outcomes={this.props.outcomes}/> : null}
-        <div className="outcome-section">
-
-        </div>
+          outcomes={this.props.outcomes}
+          createOpinion={this.props.createOpinion}
+          deleteOpinion={this.props.deleteOpinion}
+          editOpinion={this.props.editOpinion}
+          opinions={this.props.opinions}
+          /></div> : null}
       </div>
     )
   }

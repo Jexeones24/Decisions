@@ -2,14 +2,14 @@ const path = "http://localhost:3000/api/v1/opinions"
 
 export default class OpinionAdapter {
 
-  static createOpinion(content, id, value){
+  static createOpinion(content, outcomeId, value){
     return fetch(path, {
       method: 'post',
       headers: headers(),
       body: JSON.stringify({
-        content: content,
-        outcome_id: `${id}`,
-        value: value
+        content: `${content}`,
+        outcome_id: `${outcomeId}`,
+        value: `${value}`
       })
     })
     .then(resp => resp.json())

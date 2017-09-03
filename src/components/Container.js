@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import Decision from './Decision'
 import Outcome from './Outcome'
-import Opinion from './Opinion'
 import DecisionAdapter from '../adapters/DecisionAdapter'
 import OutcomeAdapter from '../adapters/OutcomeAdapter'
+import OpinionAdapter from '../adapters/OpinionAdapter'
+
 
 
 export default class Container extends Component {
@@ -27,7 +28,7 @@ export default class Container extends Component {
 
   deleteDecision = (decision) => {
     DecisionAdapter.deleteDecision(decision)
-      .then( newDecisions => this.setState({ decisions: newDecisions }, () => {console.log(this.state.decisions)})
+      .then( newDecisions => this.setState({ decisions: newDecisions })
     )
   }
 
@@ -41,25 +42,23 @@ export default class Container extends Component {
            Object.assign({}, this.state.decisions[index], newDecision),
            ...this.state.decisions.slice(index+1)
          ]
-       }, () => {console.log(this.state.decisions)});
+       });
     })
   }
 
   createOutcome = (content, decisionId) => {
-    console.log("create outcome", content, decisionId)
     OutcomeAdapter.createOutcome(content, decisionId)
-      .then( outcome => this.setState({ outcomes: [...this.state.outcomes, outcome]}, () => {console.log(this.state.outcomes)})
+      .then( outcome => this.setState({ outcomes: [...this.state.outcomes, outcome]})
     )
   }
 
   deleteOutcome = (outcome) => {
     OutcomeAdapter.deleteOutcome(outcome.id)
-      .then( newOutcomes => this.setState({ outcomes: newOutcomes }, () => {console.log(this.state.outcomes)})
+      .then( newOutcomes => this.setState({ outcomes: newOutcomes })
     )
   }
 
   editOutcome = (content, id) => {
-    console.log("edit outcome")
     OutcomeAdapter.editOutcome(content, id)
       .then( newOutcome => {
         let index = this.state.outcomes.findIndex( outcome => outcome.id === id )
@@ -73,6 +72,25 @@ export default class Container extends Component {
     })
   }
 
+
+  createOpinion = (content, outcomeId, value) => {
+    OpinionAdapter.createOpinion(content, outcomeId, value)
+      .then( opinion => this.setState({ opinions: [...this.state.opinions, opinion]}, () => {console.log(this.state)})
+    )
+  }
+
+  deleteOpinion = (opinion) => {
+    console.log("delete opinion", opinion)
+    OpinionAdapter.deleteOpinion(opinion.id)
+      .then( newOpinions => this.setState({ opinions: newOpinions })
+    )
+  }
+
+  editOpinion = () => {
+    console.log("edit opinion")
+
+  }
+
   render(){
     return (
       <div className="container">
@@ -84,10 +102,11 @@ export default class Container extends Component {
           createOutcome={this.createOutcome}
           deleteOutcome={this.deleteOutcome}
           editOutcome={this.editOutcome}
-          outcomes={this.state.outcomes}/>
-        </div>
-        <div className="opinion-section">
-          <Opinion />
+          outcomes={this.state.outcomes}
+          createOpinion={this.createOpinion}
+          deleteOpinion={this.deleteOpinion}
+          editOpinion={this.editOpinion}
+          opinions={this.state.opinions}/>
         </div>
       </div>
     )

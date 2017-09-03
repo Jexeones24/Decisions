@@ -3,39 +3,55 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Menu, Item, Segment, Input } from 'semantic-ui-react'
 import './App.css';
 import Login from './components/Login'
+import NavBar from './components/NavBar'
 import DecisionContainer from './components/DecisionContainer'
+import UserAdapter from './adapters/UserAdapter'
 
 class App extends Component {
   constructor(){
     super();
+
+    this.state = {
+      currentUser: {},
+      loggedIn: false
+    }
+  }
+
+  // no jwt token yet
+  createUser = (user) => {
+    UserAdapter.createUser(user)
+      .then( data => {
+        this.setState({ currentUser: data, loggedIn: true })
+      }, () => {console.log(this.state)})
+  }
+
+  renderHome = () => {
+    return (
+      <DecisionContainer />
+    )
+  }
+
+  renderLogin = () => {
+    return (
+      <Login createUser={this.createUser}/>
+    )
   }
 
   render() {
-    let activeItem = null;
-
     return (
       <div className="App">
-        <div>
-          <Menu pointing>
-            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-            <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
-            <Menu.Menu position='right'>
-              <Menu.Item>
-                <Input icon='search' placeholder='Search...' />
-              </Menu.Item>
-            </Menu.Menu>
-          </Menu>
-          <div className="segment">
-            <DecisionContainer />
-            {/* <Login /> */}
+        <Router>
+          <div>
+            <div className="segment">
+              <NavBar />
+              <Route exact path="/" render={this.renderHome} />
+              <Route exact path="/login" render={this.renderLogin} />
+            </div>
           </div>
-        </div>
-
+        </Router>
       </div>
     );
   }
 }
 
 export default App;
-
-//conditional here telling what to render - login/signup

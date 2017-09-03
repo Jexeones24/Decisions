@@ -30,8 +30,7 @@ export default class OutcomeAdapter {
       method: 'put',
       headers: headers(),
       body: JSON.stringify({
-        content: `${content}`,
-        id: `${id}`
+        content: `${content}`
       })
     })
     .then(resp => resp.json())

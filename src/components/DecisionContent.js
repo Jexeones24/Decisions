@@ -18,13 +18,19 @@ export default class DecisionContent extends Component {
     this.setState({ editFormVisible: !this.state.editFormVisible })
   }
 
+  getId = () => {
+    let decisionId = this.props.decision.id
+    this.props.getDecisionId(decisionId)
+  }
+
   render(){
     return (
       <div className="decision-display">
         <h3>{this.props.decision.content}
           <button onClick={this.handleDelete}>-</button>
           <button onClick={this.formVisible}>edit</button>
-          {this.state.editFormVisible ? <div className="edit-form"><DecisionEditForm editDecision={this.props.editDecision} decision={this.props.decision} id={this.props.id}/></div> : null}
+          <button onClick={this.getId.bind(this)}>add outcome</button>
+          {this.state.editFormVisible ? <div className="edit-form"><DecisionEditForm editDecision={this.props.editDecision} decision={this.props.decision} id={this.props.idx}/></div> : null}
         </h3>
       </div>
     )

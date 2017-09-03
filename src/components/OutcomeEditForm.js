@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class DecisionEditForm extends Component {
+export default class OutcomeEditForm extends Component {
   constructor(){
     super();
 
@@ -16,13 +16,14 @@ export default class DecisionEditForm extends Component {
 
   handleSubmit = (e) => {
     let content = this.state.content
+    let id = this.props.outcome.id
     e.preventDefault();
-    this.props.editDecision(content, this.props.decision.id)
+    this.props.editOutcome(content, id)
   }
 
   render() {
     return (
-      <div className="decision-edit-form">
+      <div className="outcome-edit-form">
         <form action="" onSubmit={this.handleSubmit.bind(this)}>
           <input type="text" value={this.state.content} onChange={this.handleChange}/>
           <button>Submit</button>

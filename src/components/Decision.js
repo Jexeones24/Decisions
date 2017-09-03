@@ -1,14 +1,27 @@
 import React, { Component } from 'react'
 import DecisionForm from './DecisionForm'
 import DecisionContent from './DecisionContent'
+import Outcome from './Outcome'
 
 export default class Decision extends Component {
   constructor() {
     super();
+
+    this.state = {
+      outcomeFormVisible: false,
+      decisionId: null
+    }
   }
 
   handleDelete = () => {
     this.props.deleteDecision(this.props)
+  }
+
+  getDecisionId = (decisionId) => {
+    console.log("decision id:", decisionId)
+    this.setState({
+      outcomeFormVisible: !this.state.outcomeFormVisible,
+      decisionId: decisionId })
   }
 
 
@@ -21,7 +34,16 @@ export default class Decision extends Component {
         </div>
         <div className="decision-display">
           {this.props.decisions.map((decision, idx) => <DecisionContent
-            decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}/>)}
+            decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
+            getDecisionId={this.getDecisionId}/>)}
+        </div>
+        {this.state.outcomeFormVisible ? <Outcome
+          decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
+          deleteOutcome={this.props.deleteOutcome}
+          editOutcome={this.props.editOutcome}
+          outcomes={this.props.outcomes}/> : null}
+        <div className="outcome-section">
+
         </div>
       </div>
     )

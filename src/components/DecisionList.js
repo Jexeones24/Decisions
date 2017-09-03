@@ -8,7 +8,7 @@ export default class DecisionList extends Component {
 
     this.state = {
       content: "",
-      showOutcomeForm: false,
+      formVisible: false,
       disabled: false,
       editable: false
     }
@@ -17,7 +17,6 @@ export default class DecisionList extends Component {
   handleAdd = (e) => {
     e.preventDefault();
     this.setState({
-      showOutcomeForm: !this.state.showOutcomeForm,
       editable: !this.state.editable,
       disabled: !this.state.disabled
     })
@@ -34,10 +33,11 @@ export default class DecisionList extends Component {
 
   handleDelete = () => {
     this.props.deleteDecision()
-    this.setState({ content: "" }, () => {
-      console.log(this.state.content)}
-    )
-    // clear input field
+    this.setState({
+      content: "",
+      disabled: !this.state.disabled,
+      editable: !this.state.editable
+   })
   }
 
   // button doesn't toggle
@@ -47,22 +47,33 @@ export default class DecisionList extends Component {
     this.props.editDecision(content)
   }
 
+
+
+  showForm = () => {
+    this.setState({formVisible: !this.state.formVisible})
+  }
+
   render() {
-    var decision = this.state.editable ? <TextArea disabled="" maxLength={200} autoHeight defaultValue='Should I...' type="text" onChange={this.handleChange}/> : <h3>{this.state.content}</h3>
 
     return (
       <div>
         <Form>
           <Form.Field>
-            <h1><label>WHAT'S YOUR LIFE'S STRIFE?</label></h1>
-              <div className="decision-bar">
-                <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" value={this.state.content} onChange={this.handleChange}/>
-                {(this.state.editable === false) ? <Button icon='add' onClick={this.handleAdd}/>
-                : <div className="edit-delete-buttons"><Button icon='delete' onClick={this.handleDelete}/><Button toggle active={!this.state.editable} icon='edit' onClick={this.handleEdit}/></div>}
+            <h1><label>WHAT'S THE DECISION?</label></h1>
+            <div className="decision-bar">
+              <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={200} autoHeight placeholder='Should I...' type="text" value={this.state.content} onChange={this.handleChange}/>
+              <Button icon='add' disabled={!this.state.content} onClick={this.handleAdd}/>
+              <Button icon='delete' disabled={!this.state.content} onClick={this.handleDelete}/>
+              <Button disabled={!this.state.content} icon='edit' onClick={this.handleEdit}/>
+              <Button icon onClick={this.showForm} disabled={!this.state.content} value="new-outcome">
+                + new outcome
+              </Button>
             </div>
           </Form.Field>
         </Form>
-        {this.state.showOutcomeForm && <OutcomeForm createOutcome={this.props.createOutcome} createOpinions={this.props.createOpinions}/>}
+          {this.state.formVisible ? <div className="outcome-form"><OutcomeForm createOutcome={this.props.createOutcome} createOpinions={this.props.createOpinions}
+          deleteOutcome={this.props.deleteOutcome}
+          editOutcome={this.props.editOutcome}/></div> : null }
       </div>
     )
   }
@@ -70,13 +81,5 @@ export default class DecisionList extends Component {
 
 
 
-
-
-
-
-
 // limit characters
 // make sure it's real content
-// only allow + click and form to appear if content is in box
-  // want button to disappear
-  // want content to be condensed and centered

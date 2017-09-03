@@ -39,7 +39,6 @@ export default class DecisionContainer extends Component {
   editDecision = (content) => {
     console.log("editing", this.state.decision, "content:", content)
     let id = this.state.decision.id
-    console.log(id)
     DecisionAdapter.editDecision(content, id)
       .then( newDecision => this.setState({
       decision: newDecision
@@ -47,13 +46,37 @@ export default class DecisionContainer extends Component {
     )
   }
 
-
   createOutcome = (content, id) => {
     OutcomeAdapter.createOutcome(content, this.state.decision.id)
       .then( outcome => this.setState({
         outcomes: [...this.state.outcomes, outcome]
-      }, () => { console.log("id:", outcome.id, "outcomes:", this.state.outcomes) })
+      }, () => { console.log("Added outcome:", this.state.outcomes) })
     )
+  }
+
+  deleteOutcome = (content) => {
+    let outcome = this.state.outcomes.filter((o) => o.content === content )
+    OutcomeAdapter.deleteOutcome(outcome[0].id)
+    let newOutcomes = this.state.outcomes.filter((o) => o.id !== outcome.id)
+    this.setState({ outcomes: newOutcomes })
+  }
+
+
+  // not getting new content
+  editOutcome = (content) => {
+    console.log("edit in decision container, new content:", content)
+    let outcome = this.state.outcomes.filter((o) => o.content === content)
+    let id = outcome[0].id
+    OutcomeAdapter.editOutcome(content, id)
+    .then( newOutcome => {
+      let index = this.state.outcomes.findIndex( outcome => outcome.id === id)
+      this.setState({ outcomes: [
+        ...this.state.outcomes.slice(0, index),
+        Object.assign({}, this.state.outcomes[index], newOutcome),
+        ...this.state.outcomes.slice(index + 1)
+      ]
+    }, () => { console.log(this.state.outcomes)});
+  })
   }
 
   createOpinions = (text, value) => {
@@ -69,8 +92,31 @@ export default class DecisionContainer extends Component {
   render(){
     return (
       <div className="decision-container">
-        <DecisionList createDecision={this.createDecision} createOutcome={this.createOutcome} createOpinions={this.createOpinions} deleteDecision={this.deleteDecision} editDecision={this.editDecision}/>
+        <div className="decision-list">
+          <DecisionList
+            createDecision={this.createDecision}
+            deleteDecision={this.deleteDecision}
+            editDecision={this.editDecision} createOutcome={this.createOutcome}
+            deleteOutcome={this.deleteOutcome}
+            editOutcome={this.editOutcome} createOpinions={this.createOpinions}
+            />
+        </div>
       </div>
     )
   }
 }
+
+// let outcome = this.state.outcomes.filter((o) => o.content === content)
+// console.log(outcome)
+// let id = outcome[0].id
+// console.log(id)
+// OutcomeAdapter.editOutcome(content, id)
+//   .then( newOutcome => {
+//     let index = this.state.outcomes.findIndex( outcome => outcome.id === id)
+//     this.setState({ outcomes: [
+//       ...this.state.outcomes.slice(0, index),
+//       Object.assign({}, this.state.outcomes[index], newOutcome),
+//       ...this.state.outcomes.slice(index + 1)
+//     ]
+//   }, () => { console.log(this.state.outcomes)});
+// })

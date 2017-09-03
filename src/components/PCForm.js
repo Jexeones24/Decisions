@@ -46,10 +46,6 @@ export default class PCForm extends Component {
         <Button icon onClick={this.handleClick} value="con">
           + risk
         </Button>
-        <Button icon onClick={this.handleClick} value="new-outcome">
-          + new outcome
-          {/* render OutcomeForm */}
-        </Button>
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>

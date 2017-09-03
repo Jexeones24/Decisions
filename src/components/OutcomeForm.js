@@ -8,27 +8,24 @@ export default class OutcomeForm extends Component {
     super();
 
     this.state = {
-      showPCForm: false,
       content: "",
+      showPCForm: false,
       disabled: false,
-      buttonVisibility: true,
+      editable: false,
       pros: [],
       cons: [],
       noOfPros: 0,
-      noOfCons: 0,
-      showPros: false,
-      showCons: false
+      noOfCons: 0
     }
+
   }
 
-  
   addPro = (pro, value) => {
     var value = true
     this.setState({ pros: [...this.state.pros, pro]}, () => {
       this.incrementBadge(pro, value)
     })
   }
-
 
   addCon = (con, value) => {
     var value = false
@@ -43,35 +40,44 @@ export default class OutcomeForm extends Component {
     this.setState({ noOfCons: this.state.noOfCons + 1})
   }
 
-  handleSubmit = (e) => {
+  handleAdd = (e) => {
     e.preventDefault();
     this.setState({
-      showPCForm: !this.state.showProConForm ,
+      showPCForm: !this.state.showProConForm,
       disabled: !this.state.disabled,
-      buttonVisibility: !this.state.buttonVisibility,
+      editable: !this.state.editable
     })
-  }
-
-  handleChange = (e) => {
-    this.setState({ content: e.target.value })
-  }
-
-  handleClick = () => {
     this.props.createOutcome(this.state.content)
   }
 
-  handleDelete = (e) => {
-    console.log("in handle delete", e)
+  handleChange = (e) => {
+    console.log(e.target.value)
+    let content = e.target.value
+    this.setState({ content })
+  }
+
+  handleDelete = () => {
+    this.props.deleteOutcome(this.state.content)
+    this.setState({
+      content: "",
+      disabled: !this.state.disabled,
+      editable: !this.state.editable
+     })
+  }
+
+  //not recording new changes to content
+  handleEdit(){
+    let content = this.state.content
+    this.setState({ disabled: !this.state.disabled }, () => {console.log(this.state.content)})
+    this.props.editOutcome(content)
   }
 
   render (){
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit} >
-          <Form.Field>
-            <h1><label>CHOICES</label></h1>
+      <div className="outcome-form">
+        <h1><label>OUTCOMES</label></h1>
+          <div className="pro-con-badges">
             <List link>
-            <h4>STATS</h4>
             <Label>
               <List.Item as='a'>Pros</List.Item>
               <Label.Detail>{this.state.noOfPros}</Label.Detail>
@@ -81,19 +87,25 @@ export default class OutcomeForm extends Component {
               <Label.Detail>{this.state.noOfCons}</Label.Detail>
             </Label>
             </List>
-            <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={150} autoHeight placeholder='Possible outcomes...' type="text" onChange={this.handleChange}/>
-            {this.state.buttonVisibility && <Button icon='add' onClick={this.handleClick} />}
+          </div>
+          <Form>
+            <Form.Field>
+              <TextArea disabled={(this.state.disabled) ? "disabled" : ""} maxLength={150} autoHeight placeholder='Possible outcome...' type="text" value={this.state.content} onChange={this.handleChange}/>
+
+              <Button icon='add' disabled={!this.state.content} onClick={this.handleAdd}/>
+              <Button icon='delete' onClick={this.handleDelete} disabled={!this.state.content}/>
+              <Button icon='edit' disabled={!this.state.content} onClick={this.handleEdit.bind(this)}/>
           </Form.Field>
         </Form>
-        {this.state.showPCForm && <PCForm incrementBadge={this.incrementBadge} addPro={this.addPro} addCon={this.addCon} pros={this.state.pros} cons={this.state.cons} createOpinions={this.props.createOpinions}/>}
-        <div className="opinion-list">
-        <OpinionList pros={this.state.pros} cons={this.state.cons} delete={this.handleDelete}/>
+          {this.state.showPCForm && <PCForm incrementBadge={this.incrementBadge} addPro={this.addPro} addCon={this.addCon} pros={this.state.pros} cons={this.state.cons} createOpinions={this.props.createOpinions}/>}
+          <div className="opinion-list">
+          <OpinionList pros={this.state.pros} cons={this.state.cons} delete={this.handleDelete}/>
         </div>
       </div>
     )
   }
 }
 
+
 // DISPLAY PROS AND CONS
 // validate for empty fields
-// hide pro con before adding pros and cons

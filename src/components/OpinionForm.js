@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class OutcomeForm extends Component {
+export default class OpinionForm extends Component {
   constructor() {
     super();
 
@@ -8,9 +8,9 @@ export default class OutcomeForm extends Component {
 
   render(){
     return (
-      <div className="outcome-form">
-        <form className="outcome-form-field">
-          <input type="text" placeholder="Outcome"/>
+      <div className="opinion-form">
+        <form className="opinion-form-field">
+          <input type="text" placeholder="Opinion"/>
         </form>
         <button name="submit">Submit</button>
       </div>

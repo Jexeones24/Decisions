@@ -14,6 +14,19 @@ export default class OpinionAdapter {
     })
     .then(resp => resp.json())
   }
+
+  static deleteOpinion(id){
+    return fetch(`http://localhost:3000/api/v1/opinions/${id}`, {
+      method: 'delete',
+      headers: headers(),
+      body: JSON.stringify({
+        id: `${id}`
+      })
+    })
+    .then( resp => resp.json() )
+  }
+
+
 }
 
 let headers = () => {

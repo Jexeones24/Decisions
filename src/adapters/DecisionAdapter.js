@@ -14,12 +14,12 @@ export default class DecisionAdapter {
     }
 
 
-  static createDecision(content){
+  static createDecision(decision){
     return fetch(path, {
       method: 'post',
       headers: headers(),
       body: JSON.stringify({
-        content: content,
+        content: decision.content,
         user_id: 1,
       })
     })
@@ -27,12 +27,12 @@ export default class DecisionAdapter {
   }
 
 
-  static deleteDecision(id){
-    return fetch(`http://localhost:3000/api/v1/decisions/${id}`, {
+  static deleteDecision(decision){
+    return fetch(`http://localhost:3000/api/v1/decisions/${decision.id}`, {
       method: 'delete',
       headers: headers(),
       body: JSON.stringify({
-        id: `${id}`
+        id: `${decision.id}`
       })
     })
     .then(resp => resp.json())

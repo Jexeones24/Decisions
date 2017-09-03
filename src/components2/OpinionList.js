@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react'
 
 export default class OpinionList extends Component {
+  constructor(){
+    super();
+  }
 
   handleClick = (e) => {
-    this.props.delete(e)
+    let opinionContent = e
+    this.props.delete(opinionContent)
   }
 
   render() {
@@ -13,10 +17,10 @@ export default class OpinionList extends Component {
         <Grid>
           <Grid.Row>
           <Grid.Column width={8}>
-            {this.props.pros.map((pro, i) => <p key={i}>{pro} <button onClick={this.handleClick.bind(this, pro)}>-</button></p>)}
+            {this.props.pros.map((pro, i) => <h5 key={i}>{pro} <button onClick={this.handleClick.bind(this, pro)}>-</button></h5>)}
           </Grid.Column>
           <Grid.Column width={8}>
-            {this.props.cons.map((con, i) => <p key={i}>{con} <button onClick={this.handleClick.bind(this, con)}>-</button></p>)}
+            {this.props.cons.map((con, i) => <h5 key={i}>{con} <button onClick={this.handleClick.bind(this, con)}>-</button></h5>)}
           </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -24,6 +28,3 @@ export default class OpinionList extends Component {
     )
   }
 }
-
-
-// should this be a container for list items???

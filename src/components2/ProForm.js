@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Input } from 'semantic-ui-react'
 
-export default class Pro extends Component {
+export default class ProForm extends Component {
   constructor(){
     super();
 
@@ -19,14 +19,14 @@ export default class Pro extends Component {
     let value = true
     this.props.addPro(this.state.text)
     this.setState({ text: "" })
-    this.props.createOpinions(this.state.text, value)
+    this.props.createOpinion(this.state.text, value)
   }
 
   render() {
     return (
       <div className="con-item">
-        <Input type="text" placeholder='Pro...' onChange={this.handleChange} value={this.state.text} />
-        <Button basic color='black' onClick={this.handleClick}>ADD</Button>
+        <Input type="text" placeholder='Reward...' onChange={this.handleChange} value={this.state.text} />
+        <Button basic color='black' onClick={this.handleClick}>+</Button>
       </div>
     )
   }

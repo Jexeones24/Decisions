@@ -27,7 +27,6 @@ export default class Decision extends Component {
   render(){
     return (
       <div className="decision">
-        <h2>DECISION</h2>
         <div className="decision-form">
           <DecisionForm createDecision={this.props.createDecision}/>
         </div>

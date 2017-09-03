@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Container from './components/Container'
+import NavBar from './components/NavBar'
+import Login from './components/Login'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 class App extends Component {
@@ -13,17 +16,43 @@ class App extends Component {
     }
   }
 
+  renderHome = () => {
+    return(
+      <div>
+        HOME
+      </div>
+    )
+  }
+
 
   render() {
     return (
-      <div className="App">
-        <aside><h1>NAVBAR</h1></aside>
-          <div className="sidebar"></div>
-          <header><h1>HEADER</h1></header>
-          <section>
+      <div className="container-app">
+        <div className="sidebar"></div>
+          <header>
+            <h1>LIFE STRIFE</h1>
+            <aside>
+              <Router>
+                <div>
+                  <NavBar loggedIn={this.props.loggedIn} logout={this.logout} />
+                  <Route exact path="/" render={this.renderHome} />
+                  <Route exact path="/login" render={this.renderLogin} />
+                </div>
+              </Router>
+            </aside>
+          </header>
+
+          <nav>
+            <ul>
+              <h2><li><a href="#">FUCK</a></li></h2>
+              <h2><li><a href="#">A</a></li></h2>
+              <h2><li><a href="#">DUCK</a></li></h2>
+            </ul>
+          </nav>
+          <article>
             <Container />
-          </section>
-        <footer><h1>FOOTER</h1></footer>
+          </article>
+        <footer><h3>FEETER Copyright &copy; yofuckdis</h3></footer>
       </div>
     );
   }

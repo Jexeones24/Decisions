@@ -20,6 +20,7 @@ export default class OutcomeForm extends Component {
     let content = this.state.content
     let decisionId = this.props.decisionId
     this.props.createOutcome(content, decisionId)
+    this.setState({ content: '' })
   }
 
   // Risk | Reward becomes tags

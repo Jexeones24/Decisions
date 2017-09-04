@@ -28,6 +28,7 @@ export default class OpinionForm extends Component {
     let content = this.state.content
     let value = this.state.value
     this.props.createOpinion(content, outcomeId, value)
+    this.setState({ content: '' })
   }
 
   render(){

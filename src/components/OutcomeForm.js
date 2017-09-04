@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Comment, Form, Header } from 'semantic-ui-react'
 
 export default class OutcomeForm extends Component {
   constructor() {
@@ -24,10 +25,17 @@ export default class OutcomeForm extends Component {
   render(){
     return (
       <div className="outcome-form">
-        <form className="outcome-form-field" onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="Outcome" value={this.state.content} onChange={this.handleChange}/>
-          <button name="outcome-submit-form">Submit</button>
-        </form>
+        <Comment.Group>
+          <Comment>
+            <Comment.Actions>
+              <Comment.Action>Risk | Reward</Comment.Action>
+            </Comment.Actions>
+            <Form reply onSubmit={this.handleSubmit}>
+              <Form.TextArea type="text" placeholder="Outcome" value={this.state.content} onChange={this.handleChange} name="content" required/>
+              <Button content='Submit Outcome' labelPosition='left' icon='edit' primary />
+            </Form>
+          </Comment>
+        </Comment.Group>
       </div>
     )
   }

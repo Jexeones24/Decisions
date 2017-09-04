@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Button, Form } from 'semantic-ui-react'
+
 
 export default class DecisionEditForm extends Component {
   constructor(){
@@ -23,10 +25,10 @@ export default class DecisionEditForm extends Component {
   render() {
     return (
       <div className="decision-edit-form">
-        <form action="" onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" value={this.state.content} onChange={this.handleChange}/>
-          <button>Submit</button>
-        </form>
+        <Form reply onSubmit={this.handleSubmit.bind(this)}>
+          <Form.TextArea type="text" placeholder="Edit Decision" value={this.state.content} onChange={this.handleChange} name="content"/>
+          <Button content='Submit' labelPosition='left' icon='edit' primary />
+        </Form>
       </div>
     )
   }

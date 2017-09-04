@@ -21,35 +21,30 @@ export default class DecisionForm extends Component {
     this.props.createDecision(this.state)
   }
 
+  // as='a' is link to profile page??
   render(){
     return (
-        // 
-        // <form onSubmit={this.handleSubmit}
-        //   className="decision-form-field">
-        //   <input type="text" placeholder="Decision" value={this.state.content} onChange={this.handleChange} name="content"/>
-        //   <button className="decision-submit-btn">Submit</button>
-        // </form>
-        <div className="decision-form">
+      <div className="decision-form">
         <Comment.Group>
           <Header as='h1' dividing>DECISION</Header>
         <Comment>
-           <Comment.Avatar src='/assets/images/avatar/small/joe.jpg' />
+           <Comment.Avatar src='https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?dpr=2&auto=format&fit=crop&w=1199&h=1493&q=80&cs=tinysrgb&crop=' />
            <Comment.Content>
-             <Comment.Author as='a'>Current User</Comment.Author>
+             <Comment.Author as='a'>CURRENT USER</Comment.Author>
              <Comment.Metadata>
                <div>5 days ago</div>
              </Comment.Metadata>
-             <Comment.Text>
-               What's weighing on your mind...
+             <Comment.Text as='h2'>
+               Give a brief description of what's weighing on your mind...
              </Comment.Text>
              <Comment.Actions>
-               <Comment.Action>Add outcomes</Comment.Action>
+               <Comment.Action>Add Decision</Comment.Action>
              </Comment.Actions>
            </Comment.Content>
          </Comment>
 
-         <Form reply>
-           <Form.TextArea type="text" placeholder="Decision" value={this.state.content} onChange={this.handleChange} name="content"/>
+         <Form reply onSubmit={this.handleSubmit}>
+           <Form.TextArea type="text" placeholder="Decision" value={this.state.content} onChange={this.handleChange} name="content" required/>
            <Button content='Submit Decision' labelPosition='left' icon='edit' primary />
          </Form>
          </Comment.Group>

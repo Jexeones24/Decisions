@@ -44,9 +44,9 @@ class App extends Component {
 
           <nav>
             <ul>
-              <h2><li><a href="#">FUCK</a></li></h2>
-              <h2><li><a href="#">A</a></li></h2>
-              <h2><li><a href="#">DUCK</a></li></h2>
+              <h2><li><a href="#">LIFELINE</a></li></h2>
+              <h2><li><a href="#">QUESTIONS</a></li></h2>
+              <h2><li><a href="#">FML</a></li></h2>
             </ul>
           </nav>
           <article>

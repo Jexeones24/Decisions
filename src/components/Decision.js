@@ -3,6 +3,7 @@ import DecisionForm from './DecisionForm'
 import DecisionContent from './DecisionContent'
 import Outcome from './Outcome'
 
+
 export default class Decision extends Component {
   constructor() {
     super();
@@ -30,11 +31,14 @@ export default class Decision extends Component {
         <div className="decision-form">
           <DecisionForm createDecision={this.props.createDecision}/>
         </div>
+
+
         <div className="decision-display">
           {this.props.decisions.map((decision, idx) => <DecisionContent
             decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
             getDecisionId={this.getDecisionId}/>)}
         </div>
+
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}

@@ -25,6 +25,10 @@ export default class DecisionContent extends Component {
     this.props.getDecisionId(decisionId)
   }
 
+  storeDecision = () => {
+    console.log("storing decision")
+  }
+
   render(){
     return (
       <div className="decision-display">
@@ -36,6 +40,9 @@ export default class DecisionContent extends Component {
             <Item.Header>Decision {this.props.id}</Item.Header>
             <Item.Description>{this.props.decision.content}</Item.Description>
             <Item.Extra>
+              <Button floated='right' onClick={this.storeDecision}>
+                Done
+              </Button>
               <Button floated='right' onClick={this.formVisible}>
                 Edit
               </Button>

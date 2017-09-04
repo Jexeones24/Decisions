@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import Decision from './Decision'
 import Outcome from './Outcome'
 import DecisionAdapter from '../adapters/DecisionAdapter'
 import OutcomeAdapter from '../adapters/OutcomeAdapter'
 import OpinionAdapter from '../adapters/OpinionAdapter'
-
+import DecisionShow from './DecisionShow'
 
 
 export default class Container extends Component {
@@ -14,9 +15,19 @@ export default class Container extends Component {
     this.state = {
       decisions: [],
       outcomes: [],
-      opinions: []
+      opinions: [],
+      decisionFormVisible: false,
+      currentUser: {id: 2, username: "smorelli"} // hardcoded
     }
   }
+
+  componentDidMount(){
+    console.log(this.state.currentUser)
+    DecisionAdapter.getDecisions(this.state.currentUser)
+      .then( decisions => {
+        this.setState({decisions}, () => {console.log(this.state.decisions)})
+      })
+    }
 
   createDecision = (decision) => {
     DecisionAdapter.createDecision(decision)
@@ -101,6 +112,10 @@ export default class Container extends Component {
     })
   }
 
+  showDecisionForm = () => {
+    this.setState({ decisionFormVisible: !this.state.decisionFormVisible })
+  }
+
   render(){
     return (
       <div className="container">
@@ -112,26 +127,24 @@ export default class Container extends Component {
 
           <nav>
             <ul>
-              <h2><li><a href="#">ASK FRIENDS</a></li></h2>
-              <h2><li><a href="#">HALP</a></li></h2>
-              <h2><li><a href="#">ALL DECISIONS</a></li></h2>
+              <button onClick={this.showDecisionForm}>NEW DECISION</button>
+              <button>ALL DECISIONS</button>
             </ul>
           </nav>
           <article>
-            <div className="decision-section">
-              <Decision createDecision={this.createDecision}
-              deleteDecision={this.deleteDecision}
-              editDecision={this.editDecision}
-              decisions={this.state.decisions}
-              createOutcome={this.createOutcome}
-              deleteOutcome={this.deleteOutcome}
-              editOutcome={this.editOutcome}
-              outcomes={this.state.outcomes}
-              createOpinion={this.createOpinion}
-              deleteOpinion={this.deleteOpinion}
-              editOpinion={this.editOpinion}
-              opinions={this.state.opinions}/>
-            </div>
+            {this.state.decisionFormVisible ? <Decision createDecision={this.createDecision}
+            deleteDecision={this.deleteDecision}
+            editDecision={this.editDecision}
+            decisions={this.state.decisions}
+            createOutcome={this.createOutcome}
+            deleteOutcome={this.deleteOutcome}
+            editOutcome={this.editOutcome}
+            outcomes={this.state.outcomes}
+            createOpinion={this.createOpinion}
+            deleteOpinion={this.deleteOpinion}
+            editOpinion={this.editOpinion}
+            opinions={this.state.opinions}/> :
+            <DecisionShow currentUser={this.state.currrentUser} decisions={this.state.decisions}/>}
           </article>
         <footer><h3>FEETER Copyright &copy; yofuckdis</h3></footer>
       </div>

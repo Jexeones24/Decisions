@@ -50,3 +50,8 @@ body > .grid {
  .column {
    max-width: 450px;
  }
+
+.decision-card {
+  float: left;
+  padding: 5px;
+}

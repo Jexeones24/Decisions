@@ -7,10 +7,10 @@ export default class DecisionAdapter {
       headers: headers()
     })
       .then( resp => resp.json())
-      .then( decisions => {
-         console.log(currentUser)
-        return decisions.filter((i) => i.user_id === currentUser.id)
-      })
+        .then( decisions => {
+          console.log(currentUser, decisions)
+          return decisions.filter((d) => d.user_id === currentUser.id)
+        })
     }
 
 
@@ -24,7 +24,7 @@ export default class DecisionAdapter {
         user_id: 2,
       })
     })
-    .then(resp => resp.json())
+    .then( resp => resp.json())
   }
 
 

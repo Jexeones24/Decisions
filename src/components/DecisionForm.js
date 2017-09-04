@@ -20,6 +20,7 @@ export default class DecisionForm extends Component {
     e.preventDefault();
     this.props.createDecision(this.state)
     this.setState({ content: '' })
+    window.location = '/'
   }
 
   // as='a' is link to profile page??

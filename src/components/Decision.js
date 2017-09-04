@@ -10,6 +10,7 @@ export default class Decision extends Component {
 
     this.state = {
       outcomeFormVisible: false,
+      showAll: false,
       decisionId: null
     }
   }
@@ -24,20 +25,16 @@ export default class Decision extends Component {
       decisionId: decisionId })
   }
 
-
   render(){
     return (
       <div className="decision">
-        <div className="decision-form">
-          <DecisionForm createDecision={this.props.createDecision}/>
-        </div>
-
-
-        <div className="decision-display">
+        {this.state.showAll ? <div className="decision-display">
           {this.props.decisions.map((decision, idx) => <DecisionContent
             decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
             getDecisionId={this.getDecisionId}/>)}
-        </div>
+         </div> : <div className="decision-form">
+           <DecisionForm createDecision={this.props.createDecision}/>
+         </div>}
 
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}

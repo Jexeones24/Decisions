@@ -16,6 +16,7 @@ export default class Opinion extends Component {
   // there are no opinions yet
 
   render(){
+    debugger
     return (
       <div className="opinion">
         <h2>OPINION</h2>
@@ -25,7 +26,8 @@ export default class Opinion extends Component {
         </div>
         <div className="opinion-display">
           {/* {this.props.opinions.map((opinion, idx) => <OpinionContent key={idx} opinion={opinion} deleteOpinion={this.props.deleteOpinion} editOpinion={this.props.editOpinion}/>)} */}
-          {this.props.opinions.map((opinion, idx) => <OpinionContent key={idx} opinion={opinion} deleteOpinion={this.props.deleteOpinion} editOpinion={this.props.editOpinion}/>)}
+          {this.props.opinions.map((opinion, idx) => <OpinionContent key={idx} opinion={opinion} deleteOpinion={this.props.deleteOpinion} editOpinion={this.props.editOpinion}
+          opinions={this.props.opinions}/>)}
         </div>
       </div>
     )

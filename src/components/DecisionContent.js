@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DecisionEditForm from './DecisionEditForm'
-import { Button, Image, Item } from 'semantic-ui-react'
+import { Button, Item } from 'semantic-ui-react'
 
 
 export default class DecisionContent extends Component {

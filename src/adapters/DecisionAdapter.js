@@ -15,6 +15,7 @@ export default class DecisionAdapter {
 
 
   static createDecision(decision){
+    debugger
     return fetch(path, {
       method: 'post',
       headers: headers(),

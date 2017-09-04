@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Button, Comment, Form } from 'semantic-ui-react'
 
 export default class OutcomeForm extends Component {
   constructor() {

@@ -75,13 +75,14 @@ export default class Container extends Component {
 
   createOpinion = (content, outcomeId, value) => {
     OpinionAdapter.createOpinion(content, outcomeId, value)
-      .then( opinion => this.setState({ opinions: [...this.state.opinions, opinion]}, () => {console.log(this.state)})
+      .then( opinion => this.setState({ opinions: [...this.state.opinions, opinion]}, () => {console.log(this.state.opinions)})
     )
   }
 
   deleteOpinion = (opinion) => {
-    console.log("delete opinion", opinion)
-    OpinionAdapter.deleteOpinion(opinion.id)
+    debugger
+    console.log("delete opinion", opinion.opinion.id)
+    OpinionAdapter.deleteOpinion(opinion.opinion.id)
       .then( newOpinions => this.setState({ opinions: newOpinions })
     )
   }
@@ -94,20 +95,36 @@ export default class Container extends Component {
   render(){
     return (
       <div className="container">
-        <div className="decision-section">
-          <Decision createDecision={this.createDecision}
-          deleteDecision={this.deleteDecision}
-          editDecision={this.editDecision}
-          decisions={this.state.decisions}
-          createOutcome={this.createOutcome}
-          deleteOutcome={this.deleteOutcome}
-          editOutcome={this.editOutcome}
-          outcomes={this.state.outcomes}
-          createOpinion={this.createOpinion}
-          deleteOpinion={this.deleteOpinion}
-          editOpinion={this.editOpinion}
-          opinions={this.state.opinions}/>
-        </div>
+          <header>
+            <h1>LIFE STRIFE</h1>
+            <aside>
+            </aside>
+          </header>
+
+          <nav>
+            <ul>
+              <h2><li><a href="#">LIFELINE</a></li></h2>
+              <h2><li><a href="#">QUESTIONS</a></li></h2>
+              <h2><li><a href="#">FML</a></li></h2>
+            </ul>
+          </nav>
+          <article>
+            <div className="decision-section">
+              <Decision createDecision={this.createDecision}
+              deleteDecision={this.deleteDecision}
+              editDecision={this.editDecision}
+              decisions={this.state.decisions}
+              createOutcome={this.createOutcome}
+              deleteOutcome={this.deleteOutcome}
+              editOutcome={this.editOutcome}
+              outcomes={this.state.outcomes}
+              createOpinion={this.createOpinion}
+              deleteOpinion={this.deleteOpinion}
+              editOpinion={this.editOpinion}
+              opinions={this.state.opinions}/>
+            </div>
+          </article>
+        <footer><h3>FEETER Copyright &copy; yofuckdis</h3></footer>
       </div>
     )
   }

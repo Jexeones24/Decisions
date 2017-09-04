@@ -2,6 +2,7 @@ const path = "http://localhost:3000/api/v1/users"
 
 export default class UserAdapter {
   static createUser(user){
+    debugger
     return fetch(path, {
       method: 'post',
       headers: headers(),

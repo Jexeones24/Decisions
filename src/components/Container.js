@@ -116,6 +116,8 @@ export default class Container extends Component {
     this.setState({ decisionFormVisible: !this.state.decisionFormVisible })
   }
 
+  // need decision id for show
+
   render(){
     return (
       <div className="container">
@@ -128,7 +130,7 @@ export default class Container extends Component {
           <nav>
             <ul>
               <button onClick={this.showDecisionForm}>NEW DECISION</button>
-              <button>ALL DECISIONS</button>
+              <button onClick={this.showDecisionForm}>ALL DECISIONS</button>
             </ul>
           </nav>
           <article>
@@ -144,7 +146,7 @@ export default class Container extends Component {
             deleteOpinion={this.deleteOpinion}
             editOpinion={this.editOpinion}
             opinions={this.state.opinions}/> :
-            <DecisionShow currentUser={this.state.currrentUser} decisions={this.state.decisions}/>}
+            <DecisionShow decisions={this.state.decisions}/>}
           </article>
         <footer><h3>FEETER Copyright &copy; yofuckdis</h3></footer>
       </div>

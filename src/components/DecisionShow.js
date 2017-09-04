@@ -6,20 +6,25 @@ export default class DecisionShow extends Component {
     super();
   }
 
+  handleClick = (e) => {
+    console.log("click", this.props)
+  }
+
   render(){
     return(
       <div className="decision-cards">
-        {this.props.decisions.map((decision, idx) => <DecisionCard decision={decision} key={idx}/>) }
+        {this.props.decisions.map((decision, idx) => <DecisionCard decision={decision} key={idx} id={decision.id} handleClick={this.handleClick.bind(this)}/>) }
       </div>
     )
   }
 }
 
-const DecisionCard = ({decision, idx}) => {
+
+const DecisionCard = ({decision, idx, handleClick, id}) => {
   return(
-    <div className="decision-card" key={idx}>
+    <div className="decision-card" key={idx} id={id}>
       <Card>
-        <Card.Content header='Decision' />
+        <h1><a onClick={handleClick}><Card.Content header='Decision' /></a></h1>
         <Card.Content description={decision.content} />
         <Card.Content extra>
           <Icon name='user' />

@@ -13,6 +13,15 @@ export default class DecisionAdapter {
         })
     }
 
+  static showDecision(decision){
+    console.log(decision[0].id)
+    let id = decision[0].id
+    return fetch(`http://localhost:3000/api/v1/decisions/${id}`, {
+      headers: headers()
+    })
+      .then(resp => resp.json())
+  }
+
 
   // user id is hardcoded until i get auth to work
   static createDecision(decision){

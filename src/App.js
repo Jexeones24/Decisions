@@ -77,9 +77,15 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <header>
+            <h1>LIFE STRIFE</h1>
+          </header>
           <Route exact path='/' render={this.renderContainer} />
           <Route exact path="/login" render={this.renderLogin} />
           <Route exact path="/signup" render={this.renderSignup} />
+          <footer>
+            <h3>LIFESTRIFE Copyright &copy; thestruggleisreal</h3>
+          </footer>
         </div>
       </Router>
     );

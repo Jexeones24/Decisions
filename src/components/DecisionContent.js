@@ -29,6 +29,8 @@ export default class DecisionContent extends Component {
     console.log("storing decision")
   }
 
+  
+
   render(){
     return (
       <div className="decision-display">

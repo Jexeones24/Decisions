@@ -16,7 +16,7 @@ export default class Outcome extends Component {
   getOutcomeId = (outcomeId) => {
     this.setState({
       opinionFormVisible: !this.state.opinionFormVisible,
-      outcomeId: outcomeId }, () => {console.log(this.state.outcomeId)})
+      outcomeId: outcomeId })
   }
 
   render(){

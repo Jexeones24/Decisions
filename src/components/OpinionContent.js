@@ -22,7 +22,6 @@ export default class OpinionDisplay extends Component {
     this.setState({ editFormVisible: !this.state.editFormVisible })
   }
 
-
   getId = () => {
     let opinionId = this.props.opinion.id
     this.props.getOpinionId(opinionId)

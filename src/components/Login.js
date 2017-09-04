@@ -12,39 +12,14 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div class="ui middle aligned center aligned grid">
-      <div class="column">
-        <h2 class="ui image header">
-          <div class="content">
-            Log-in to your account
-          </div>
-        </h2>
-        <form action="" method="get" class="ui large form">
-          <div class="ui stacked secondary  segment">
-            <div class="field">
-              <div class="ui left icon input">
-                <i class="user icon"></i>
-                <input type="text" name="email" placeholder="E-mail address"/>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui left icon input">
-                <i class="lock icon"></i>
-                <input type="password" name="password" placeholder="Password"/>
-              </div>
-            </div>
-            <div class="ui fluid large teal submit button">Login</div>
-          </div>
-
-          <div class="ui error message"></div>
-
+      <div className="login-form">
+        <form action="" onSubmit={this.handleSubmit}>
+          <h1>LOGIN</h1>
+          Username<input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
+          Password<input type="text" name="password" value={this.state.password} onChange={this.handleChange}/>
+          <button type="submit">Submit</button>
         </form>
-
-        <div class="ui message">
-          New to us? <a href="#">Signup</a>
-        </div>
       </div>
-    </div>
     )
   }
 }

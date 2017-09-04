@@ -5,7 +5,10 @@ import Outcome from './Outcome'
 import DecisionAdapter from '../adapters/DecisionAdapter'
 import OutcomeAdapter from '../adapters/OutcomeAdapter'
 import OpinionAdapter from '../adapters/OpinionAdapter'
+import DecisionIndex from './DecisionIndex'
 import DecisionShow from './DecisionShow'
+import { Button } from 'semantic-ui-react'
+
 
 
 export default class Container extends Component {
@@ -14,9 +17,12 @@ export default class Container extends Component {
 
     this.state = {
       decisions: [],
+      decisionObject: {},
       outcomes: [],
       opinions: [],
       decisionFormVisible: false,
+      showDecision: false,
+      filtered: null,
       currentUser: {id: 2, username: "smorelli"} // hardcoded
     }
   }
@@ -98,7 +104,6 @@ export default class Container extends Component {
   }
 
   editOpinion = (content, id) => {
-    console.log("edit opinion")
     OpinionAdapter.editOpinion(content, id)
       .then( newOpinion => {
         let index = this.state.opinions.findIndex( opinion => opinion.id === id )
@@ -116,39 +121,42 @@ export default class Container extends Component {
     this.setState({ decisionFormVisible: !this.state.decisionFormVisible })
   }
 
-  // need decision id for show
+  // have to press the decision twice to show - why?
+  showDecision = (id) => {
+    let decision = this.state.decisions.filter((d) => d.id === id)
+    DecisionAdapter.showDecision(decision)
+      .then( decision => this.setState({
+        showDecision: !this.state.showDecision,
+        decisionObject: decision
+      }, () => {console.log(this.state)})
+    )
+  }
 
   render(){
     return (
       <div className="container">
-          <header>
-            <h1>LIFE STRIFE</h1>
-            <aside>
-            </aside>
-          </header>
-
-          <nav>
-            <ul>
-              <button onClick={this.showDecisionForm}>NEW DECISION</button>
-              <button onClick={this.showDecisionForm}>ALL DECISIONS</button>
-            </ul>
-          </nav>
-          <article>
-            {this.state.decisionFormVisible ? <Decision createDecision={this.createDecision}
-            deleteDecision={this.deleteDecision}
-            editDecision={this.editDecision}
-            decisions={this.state.decisions}
-            createOutcome={this.createOutcome}
-            deleteOutcome={this.deleteOutcome}
-            editOutcome={this.editOutcome}
-            outcomes={this.state.outcomes}
-            createOpinion={this.createOpinion}
-            deleteOpinion={this.deleteOpinion}
-            editOpinion={this.editOpinion}
-            opinions={this.state.opinions}/> :
-            <DecisionShow decisions={this.state.decisions}/>}
-          </article>
-        <footer><h3>FEETER Copyright &copy; yofuckdis</h3></footer>
+        <nav>
+          <ul>
+            <button onClick={this.showDecisionForm}>NEW DECISION</button>
+            <button onClick={this.showDecisionForm}>ALL DECISIONS</button>
+          </ul>
+        </nav>
+        <article>
+          {this.state.showDecision && <DecisionShow decision={this.state.decisionObject}/>}
+          {this.state.decisionFormVisible ? <div className="decisions"><Decision createDecision={this.createDecision}
+          deleteDecision={this.deleteDecision}
+          editDecision={this.editDecision}
+          decisions={this.state.decisions}
+          createOutcome={this.createOutcome}
+          deleteOutcome={this.deleteOutcome}
+          editOutcome={this.editOutcome}
+          outcomes={this.state.outcomes}
+          createOpinion={this.createOpinion}
+          deleteOpinion={this.deleteOpinion}
+          editOpinion={this.editOpinion}
+          opinions={this.state.opinions}/></div> :
+          <div className="decisions"><DecisionIndex decisions={this.state.decisions} showDecision={this.showDecision}/></div>}
+        </article>
       </div>
     )
   }

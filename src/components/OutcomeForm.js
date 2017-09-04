@@ -22,6 +22,7 @@ export default class OutcomeForm extends Component {
     this.props.createOutcome(content, decisionId)
   }
 
+  // Risk | Reward becomes tags
   render(){
     return (
       <div className="outcome-form">

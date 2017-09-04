@@ -14,14 +14,14 @@ export default class DecisionAdapter {
     }
 
 
+  // user id is hardcoded until i get auth to work
   static createDecision(decision){
-    debugger
     return fetch(path, {
       method: 'post',
       headers: headers(),
       body: JSON.stringify({
         content: decision.content,
-        user_id: 1,
+        user_id: 2,
       })
     })
     .then(resp => resp.json())

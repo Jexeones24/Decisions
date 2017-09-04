@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import OutcomeEditForm from './OutcomeEditForm'
+import { Button, Item } from 'semantic-ui-react'
+
 
 export default class OutcomeContent extends Component {
   constructor() {
@@ -26,12 +28,32 @@ export default class OutcomeContent extends Component {
   render(){
     return (
       <div className="outcome-display">
-        <h3>{this.props.outcome.content}
-          <button onClick={this.handleDelete}>-</button>
-          <button onClick={this.formVisible}>edit</button>
-          <button onClick={this.getId.bind(this)}>add opinion</button>
-          {this.state.editFormVisible ? <div className="edit-form"><OutcomeEditForm editOutcome={this.props.editOutcome} outcome={this.props.outcome} id={this.props.idx}/></div> : null}
-        </h3>
+        <Item.Group relaxed>
+        <Item>
+          <Item.Image size='small' src='/assets/images/wireframe/image.png' />
+
+          <Item.Content verticalAlign='middle'>
+            <Item.Header>Outcome {this.props.id}</Item.Header>
+            <Item.Description>{this.props.outcome.content}</Item.Description>
+            <Item.Extra>
+              <Button floated='right' onClick={this.formVisible}>
+                Edit
+              </Button>
+              <Button floated='right' onClick={this.handleDelete}>
+                Delete
+              </Button>
+              <Button floated='right' onClick={this.getId.bind(this)}>
+                Add Risk
+              </Button>
+              <Button floated='right' onClick={this.getId.bind(this)}>
+                Add Reward
+              </Button>
+            </Item.Extra>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+
+      {this.state.editFormVisible ? <div className="edit-form"><OutcomeEditForm editOutcome={this.props.editOutcome} outcome={this.props.outcome} id={this.props.idx}/></div> : null}
       </div>
     )
   }

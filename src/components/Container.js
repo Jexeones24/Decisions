@@ -80,16 +80,25 @@ export default class Container extends Component {
   }
 
   deleteOpinion = (opinion) => {
-    debugger
     console.log("delete opinion", opinion.opinion.id)
     OpinionAdapter.deleteOpinion(opinion.opinion.id)
       .then( newOpinions => this.setState({ opinions: newOpinions })
     )
   }
 
-  editOpinion = () => {
+  editOpinion = (content, id) => {
     console.log("edit opinion")
-
+    OpinionAdapter.editOpinion(content, id)
+      .then( newOpinion => {
+        let index = this.state.opinions.findIndex( opinion => opinion.id === id )
+        this.setState({
+          opinions: [
+           ...this.state.opinions.slice(0,index),
+           Object.assign({}, this.state.opinions[index], newOpinion),
+           ...this.state.opinions.slice(index + 1)
+         ]
+       }, () => {console.log(this.state.opinions)});
+    })
   }
 
   render(){
@@ -103,9 +112,9 @@ export default class Container extends Component {
 
           <nav>
             <ul>
-              <h2><li><a href="#">LIFELINE</a></li></h2>
-              <h2><li><a href="#">QUESTIONS</a></li></h2>
-              <h2><li><a href="#">FML</a></li></h2>
+              <h2><li><a href="#">ASK FRIENDS</a></li></h2>
+              <h2><li><a href="#">HALP</a></li></h2>
+              <h2><li><a href="#">ALL DECISIONS</a></li></h2>
             </ul>
           </nav>
           <article>

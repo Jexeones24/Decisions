@@ -7,10 +7,12 @@ export default class DecisionIndex extends Component {
   }
 
   handleClick = (e) => {
+    console.log("clicked in decision index")
     this.props.showDecision(e)
   }
 
   render(){
+    console.log("in decision index", this.props)
     return(
       <div className="decision-card-container">
         {this.props.decisions.map((decision, idx) => <DecisionCard decision={decision} key={idx} id={decision.id} handleClick={this.handleClick}/>) }
@@ -19,8 +21,7 @@ export default class DecisionIndex extends Component {
   }
 }
 
-// conditional render here for single clicked item???
-// or redirect??
+
 const DecisionCard = ({decision, idx, handleClick, id}) => {
   return(
     <div className="decision-card" key={idx} id={id}>

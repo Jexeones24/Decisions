@@ -29,9 +29,13 @@ export default class DecisionContent extends Component {
     console.log("storing decision")
   }
 
-  
 
+
+  // outcomes and opinions willl be arrays
+  // map over these and display
   render(){
+    console.log("in decision content, decision:", this.props.decision.decision.content, "outcomes:", this.props.decision.outcomes[0].content, "opinions:", this.props.decision.opinions[0])
+
     return (
       <div className="decision-display">
         <Item.Group relaxed>
@@ -39,8 +43,8 @@ export default class DecisionContent extends Component {
           <Item.Image size='small' src='/assets/images/wireframe/image.png' />
 
           <Item.Content verticalAlign='middle'>
-            <Item.Header>Decision {this.props.id}</Item.Header>
-            <Item.Description>{this.props.decision.content}</Item.Description>
+            <Item.Header>Decision {this.props.decision.decision.id}</Item.Header>
+            <Item.Description>{this.props.decision.decision.content}</Item.Description>
             <Item.Extra>
               <Button floated='right' onClick={this.storeDecision}>
                 Done

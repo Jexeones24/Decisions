@@ -7,6 +7,7 @@ import OutcomeAdapter from '../adapters/OutcomeAdapter'
 import OpinionAdapter from '../adapters/OpinionAdapter'
 import DecisionIndex from './DecisionIndex'
 import DecisionShow from './DecisionShow'
+import DecisionContent from './DecisionContent'
 import { Button } from 'semantic-ui-react'
 
 
@@ -122,13 +123,14 @@ export default class Container extends Component {
   }
 
   // have to press the decision twice to show - why?
+  // selects one decision on click
   showDecision = (id) => {
     let decision = this.state.decisions.filter((d) => d.id === id)
     DecisionAdapter.showDecision(decision)
       .then( decision => this.setState({
         showDecision: !this.state.showDecision,
         decisionObject: decision
-      }, () => {console.log(this.state)})
+      }, () => {console.log(this.state.decisionObject)})
     )
   }
 
@@ -142,8 +144,9 @@ export default class Container extends Component {
           </ul>
         </nav>
         <article>
-          {this.state.showDecision && <DecisionShow decision={this.state.decisionObject}/>}
-          {this.state.decisionFormVisible ? <div className="decisions"><Decision createDecision={this.createDecision}
+          {this.state.showDecision && <DecisionContent decision={this.state.decisionObject} deleteDecision={this.deleteDecision}/>}
+          {this.state.decisionFormVisible ? <div className="decisions"><Decision
+          decision={this.state.decisionObject} createDecision={this.createDecision}
           deleteDecision={this.deleteDecision}
           editDecision={this.editDecision}
           decisions={this.state.decisions}

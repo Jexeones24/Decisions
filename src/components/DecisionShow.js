@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-
+// needs to have state 
 const DecisionShow = ({decision}) => {
   debugger
   let content = decision.decision.content

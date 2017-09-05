@@ -51,7 +51,7 @@ body > .grid {
    max-width: 450px;
  }
 
-.decision-card {
+ .decision-card-container {
   float: left;
-  padding: 80px;
+  padding: 50px;
 }

@@ -13,7 +13,7 @@ export default class DecisionForm extends Component {
 
   handleChange = (e) => {
     let content = e.target.value
-    this.setState({ content }, () => {console.log(content)})
+    this.setState({ content })
   }
 
   handleSubmit = (e) => {
@@ -23,7 +23,7 @@ export default class DecisionForm extends Component {
     window.location = '/'
   }
 
-  // as='a' is link to profile page??
+
   // on submit, take away the form, display the decision really big!
   render(){
     return (

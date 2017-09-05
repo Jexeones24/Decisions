@@ -8,34 +8,34 @@ export default class DecisionContent extends Component {
     super();
 
     this.state = {
-      editFormVisible: false
+      editFormVisible: false,
+      decisionId: null
     }
   }
+
 
   handleDelete = () => {
     this.props.deleteDecision(this.props)
   }
 
   formVisible = () => {
-    this.setState({ editFormVisible: !this.state.editFormVisible })
+    this.setState({
+      editFormVisible: !this.state.editFormVisible,
+      decisionId: this.props.decision.decision.id
+      })
   }
 
+  // for add outcome, can just send state
   getId = () => {
     let decisionId = this.props.decision.id
     this.props.getDecisionId(decisionId)
   }
 
-  storeDecision = () => {
-    console.log("storing decision")
-  }
 
-
-
-  // outcomes and opinions willl be arrays
-  // map over these and display
   render(){
-    console.log("in decision content, decision:", this.props.decision.decision.content, "outcomes:", this.props.decision.outcomes[0].content, "opinions:", this.props.decision.opinions[0])
-
+    // console.log("in decision content, decision:", this.props.decision.decision.content, "outcomes:", this.props.decision.outcomes[0].content, "opinions:", this.props.decision.opinions[0])
+    //
+    // debugger
     return (
       <div className="decision-display">
         <Item.Group relaxed>
@@ -50,13 +50,10 @@ export default class DecisionContent extends Component {
             {this.props.decision.opinions.map((opinion, idx) => <Item.Description key={idx}>{opinion.content}</Item.Description>)}
 
             <Item.Extra>
-              <Button floated='right' onClick={this.storeDecision}>
-                Done
-              </Button>
-              <Button floated='right' onClick={this.formVisible}>
+              <Button floated='right' onClick={this.formVisible.bind(this)}>
                 Edit
               </Button>
-              <Button floated='right' onClick={this.handleDelete}>
+              <Button floated='right' onClick={this.handleDelete.bind(this)}>
                 Delete
               </Button>
               <Button floated='right' onClick={this.getId.bind(this)}>
@@ -67,7 +64,8 @@ export default class DecisionContent extends Component {
         </Item>
       </Item.Group>
 
-      {this.state.editFormVisible ? <div className="edit-form"><DecisionEditForm editDecision={this.props.editDecision} decision={this.props.decision} id={this.props.idx}/></div> : null}
+      {this.state.editFormVisible ? <div className="edit-form"><DecisionEditForm
+        decisionId={this.state.decisionId} editDecision={this.props.editDecision} decision={this.props.decision} id={this.props.idx}/></div> : null}
       </div>
     )
   }

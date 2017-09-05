@@ -17,9 +17,10 @@ export default class DecisionEditForm extends Component {
   }
 
   handleSubmit = (e) => {
+    debugger
     let content = this.state.content
     e.preventDefault();
-    this.props.editDecision(content, this.props.decision.id)
+    this.props.editDecision(content, this.props)
   }
 
   render() {

@@ -14,7 +14,6 @@ export default class DecisionAdapter {
     }
 
   static showDecision(decision){
-    console.log(decision[0].id)
     let id = decision[0].id
     return fetch(`http://localhost:3000/api/v1/decisions/${id}`, {
       headers: headers()
@@ -38,6 +37,7 @@ export default class DecisionAdapter {
 
 
   static deleteDecision(decision){
+    debugger
     return fetch(`http://localhost:3000/api/v1/decisions/${decision.id}`, {
       method: 'delete',
       headers: headers(),
@@ -49,14 +49,13 @@ export default class DecisionAdapter {
   }
 
 
-  static editDecision(content, id){
+  static editDecision(content, decision){
     debugger
-    return fetch(`http://localhost:3000/api/v1/decisions/${id}`, {
+    return fetch(`http://localhost:3000/api/v1/decisions/${decision.decisionId}`, {
       method: 'put',
       headers: headers(),
       body: JSON.stringify({
-        content: `${content}`,
-        id: `${id}`
+        content: `${content}`
       })
     })
     .then(resp => resp.json())

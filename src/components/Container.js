@@ -44,23 +44,27 @@ export default class Container extends Component {
     )
   }
 
+
   deleteDecision = (decision) => {
     DecisionAdapter.deleteDecision(decision)
-      .then( newDecisions => this.setState({ decisions: newDecisions })
+      .then( newDecisions => this.setState({ decisions: newDecisions }, () => { window.location = '/'})
     )
   }
 
-  editDecision = (content, id) => {
-    DecisionAdapter.editDecision(content, id)
+  // this isn't updating
+  // decision show needs to be passed new state of updated decisionObject - how do i do that?
+  editDecision = (content, decision) => {
+    debugger
+    DecisionAdapter.editDecision(content, decision)
       .then( newDecision => {
-        let index = this.state.decisions.findIndex( decision => decision.id === id )
+        let index = this.state.decisions.findIndex( d => d.id === decision.id )
         this.setState({
           decisions: [
            ...this.state.decisions.slice(0,index),
            Object.assign({}, this.state.decisions[index], newDecision),
            ...this.state.decisions.slice(index+1)
          ]
-       });
+       }, () => {console.log(newDecision)});
     })
   }
 
@@ -122,10 +126,8 @@ export default class Container extends Component {
     this.setState({ decisionFormVisible: !this.state.decisionFormVisible })
   }
 
-  // have to press the decision twice to show - why?
-  // selects one decision on click
-  showDecision = (id) => {
-    let decision = this.state.decisions.filter((d) => d.id === id)
+  showDecision = (e) => {
+    let decision = this.state.decisions.filter((d) => d.id === e.id)
     DecisionAdapter.showDecision(decision)
       .then( decision => this.setState({
         showDecision: !this.state.showDecision,
@@ -134,17 +136,27 @@ export default class Container extends Component {
     )
   }
 
+  backToIndex = () => {
+    console.log("back in index")
+  }
+
+  // need something to setState of showDecision on click in decisionShow
   render(){
+
+    let decisionsToDisplay = () => {
+      return this.state.showDecision ? [] : this.state.decisions
+    }
+
     return (
       <div className="container">
         <nav>
           <ul>
             <button onClick={this.showDecisionForm}>NEW DECISION</button>
-            <button onClick={this.showDecisionForm}>ALL DECISIONS</button>
           </ul>
         </nav>
         <article>
-          {this.state.showDecision && <DecisionContent decision={this.state.decisionObject} deleteDecision={this.deleteDecision}/>}
+          {this.state.showDecision && <DecisionShow decision={this.state.decisionObject} deleteDecision={this.deleteDecision} editDecision={this.editDecision}/>}
+
           {this.state.decisionFormVisible ? <div className="decisions"><Decision
           decision={this.state.decisionObject} createDecision={this.createDecision}
           deleteDecision={this.deleteDecision}
@@ -158,7 +170,8 @@ export default class Container extends Component {
           deleteOpinion={this.deleteOpinion}
           editOpinion={this.editOpinion}
           opinions={this.state.opinions}/></div> :
-          <div className="decisions"><DecisionIndex decisions={this.state.decisions} showDecision={this.showDecision}/></div>}
+          <div className="decisions"><DecisionIndex decisions={decisionsToDisplay()}
+          backToIndex={this.backToIndex} showDecision={this.showDecision}/></div>}
         </article>
       </div>
     )

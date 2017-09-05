@@ -21,7 +21,6 @@ class App extends Component {
   }
 
   createUser = (user) => {
-    debugger
     UserAdapter.createUser(user)
       .then( user => {
         this.setState({
@@ -73,6 +72,7 @@ class App extends Component {
   }
 
 
+
   render() {
     return (
       <Router>
@@ -80,9 +80,9 @@ class App extends Component {
           <header>
             <h1>LIFE STRIFE</h1>
           </header>
-          <Route exact path='/' render={this.renderContainer} />
-          <Route exact path="/login" render={this.renderLogin} />
-          <Route exact path="/signup" render={this.renderSignup} />
+            <Route exact path='/' render={this.renderContainer} />
+            <Route exact path="/login" render={this.renderLogin} />
+            <Route exact path="/signup" render={this.renderSignup} />
           <footer>
             <h3>LIFESTRIFE Copyright &copy; thestruggleisreal</h3>
           </footer>

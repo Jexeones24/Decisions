@@ -45,6 +45,10 @@ export default class DecisionContent extends Component {
           <Item.Content verticalAlign='middle'>
             <Item.Header>Decision {this.props.decision.decision.id}</Item.Header>
             <Item.Description>{this.props.decision.decision.content}</Item.Description>
+            {this.props.decision.outcomes.map((outcome, idx) => <Item.Description key={idx}>Outcome: {outcome.content}</Item.Description>)}
+
+            {this.props.decision.opinions.map((opinion, idx) => <Item.Description key={idx}>{opinion.content}</Item.Description>)}
+
             <Item.Extra>
               <Button floated='right' onClick={this.storeDecision}>
                 Done

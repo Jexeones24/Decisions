@@ -17,12 +17,13 @@ class App extends Component {
   constructor(){
     super();
 
-    // when i modify an element (decision, outcome, opinion) do i have to re-configure the entire object??? YES fuck
+
     this.state = {
       currentUser: {id: 1, username: "jexeones"}, // hardcoded
       loggedIn: false,
       decisions: [],
       outcomes: [],
+      opinions: [],
       decisionObject: {}
     }
   }
@@ -32,7 +33,12 @@ class App extends Component {
     console.log(this.state.currentUser)
     DecisionAdapter.getDecisions(this.state.currentUser)
       .then( decisions => {
-        this.setState({decisions}, () => {console.log("mounting app", this.state.decisions)})
+        console.log(decisions)
+        this.setState({decisions}, () =>   OutcomeAdapter.getOutcomes(this.state.currentUser)
+            .then( outcomes => {
+              this.setState({outcomes}, () => {console.log("mounting app", this.state.outcomes)})
+            })
+          )
       })
     }
 
@@ -81,7 +87,6 @@ class App extends Component {
   }
 
   createOutcome = (content, decisionId) => {
-    debugger
     OutcomeAdapter.createOutcome(content, decisionId)
       .then( outcome => this.setState({ outcomes: [...this.state.outcomes, outcome]})
     )
@@ -118,16 +123,20 @@ class App extends Component {
   }
 
   renderShow = (decision) => {
+    // show needs to know what to show
+    // figure out which decision
+    // pass that decision to decision show
     return (
       <DecisionShow history={decision.history} decisionId={decision.match.params.id}
       editDecision={this.editDecision}
       deleteDecision={this.deleteDecision}
-      createOutcome={this.createOutcome}/>
+      createOutcome={this.createOutcome} decisions={this.state.decisions} outcomes={this.state.outcomes} opinions={this.state.opinions}/>
     )
   }
 
 
   render() {
+
     return (
       <Router>
         <div>

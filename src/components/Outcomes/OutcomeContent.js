@@ -14,6 +14,8 @@ export default class OutcomeContent extends Component {
 
   handleDelete = () => {
     this.props.deleteOutcome(this.props)
+
+
   }
 
   formVisible = () => {

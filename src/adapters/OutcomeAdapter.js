@@ -2,6 +2,17 @@ const path = "http://localhost:3000/api/v1/outcomes"
 
 export default class OutcomeAdapter {
 
+  static getOutcomes(currentUser) {
+    return fetch(path, {
+      headers: headers()
+    })
+      .then( resp => resp.json())
+        .then( outcomes => {
+          console.log("fetching outcomes:", outcomes)
+          return outcomes.filter((d) => d.user_id === currentUser.id)
+        })
+    }
+
   static createOutcome(content, decision_id){
     return fetch(path, {
       method: 'post',

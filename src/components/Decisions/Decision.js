@@ -25,13 +25,8 @@ export default class Decision extends Component {
       decisionId: decisionId })
   }
 
-  showOutcomeForm = () => {
-    console.log("showing outcome form")
-    // this.setState({ outcomeFormVisible: !this.state.outcomeFormVisible })
-  }
 
   render(){
-    console.log(this.props.currentUser.username)
     let currentUser = this.props.currentUser.username
     return (
       <div className="decision">
@@ -44,7 +39,6 @@ export default class Decision extends Component {
          </div>}
 
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
-
           showOutcomeForm={this.props.showOutcomeForm}
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}

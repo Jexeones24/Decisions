@@ -28,7 +28,7 @@ export default class DecisionAdapter {
       headers: headers(),
       body: JSON.stringify({
         content: decision.content,
-        user_id: 2,
+        user_id: 1,
       })
     })
     .then( resp => resp.json())

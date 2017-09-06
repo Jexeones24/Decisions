@@ -32,6 +32,7 @@ export default class DecisionShow extends Component {
 
   handleDelete = (e) => {
     this.props.deleteDecision(this.props.decisionId)
+    this.props.history.goBack()
   }
 
   handleAddOutcome = (e) => {
@@ -48,6 +49,7 @@ export default class DecisionShow extends Component {
 
   // can we loop over indiv arrays of outcomes/opinions and filter to display???
   render(){
+    console.log(this.props)
     let decisionHTML = () => {
       return (
         <div>

@@ -6,7 +6,8 @@ export default class OutcomeForm extends Component {
     super();
 
     this.state = {
-      content: ''
+      content: '',
+      hideMe: false
     }
   }
 
@@ -18,21 +19,24 @@ export default class OutcomeForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let content = this.state.content
-    let decisionId = this.props.decisionId
+    let decisionId = this.props.decisionObject.decision.id
     this.props.createOutcome(content, decisionId)
-    this.setState({ content: '' })
+    this.setState({
+      content: '',
+      hideMe: !this.state.hideMe
+    }, () => { this.props.toggleOutcomeForm(this.state.hideMe)})
   }
 
-  // Risk | Reward becomes tags
   render(){
     return (
       <div className="outcome-form">
         <Comment.Group>
           <Comment>
+            <h2><label htmlFor="">DESCRIBE A POSSIBLE OUTCOME</label></h2>
             <Comment.Actions>
               <Comment.Action>Risk | Reward</Comment.Action>
             </Comment.Actions>
-            <Form reply onSubmit={this.handleSubmit}>
+            <Form reply onSubmit={this.handleSubmit.bind(this)}>
               <Form.TextArea type="text" placeholder="Outcome" value={this.state.content} onChange={this.handleChange} name="content" required/>
               <Button content='Submit Outcome' labelPosition='left' icon='edit' primary />
             </Form>

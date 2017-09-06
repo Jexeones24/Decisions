@@ -4,11 +4,6 @@ import { Card, Icon, Button } from 'semantic-ui-react'
 export default class DecisionIndex extends Component {
   constructor(){
     super();
-
-  }
-
-  handleClick = (e) => {
-    this.props.showDecision(e)
   }
 
   render(){
@@ -16,8 +11,9 @@ export default class DecisionIndex extends Component {
       <div>
         {this.props.decisions.map((decision, idx) =>
           <div className="decision-card-container" key={idx}>
-          <Card><h1><a onClick={this.handleClick.bind(this, decision)}><Card.Content header={decision.id} value={decision.id}/></a></h1>
-            <Card.Content description={decision.content} />
+          <Card>
+            <h1><a href={'/decisions/' + decision.id}><Card.Content header={decision.id} value={decision.id}/></a></h1>
+            <Card.Content as='h1' description={decision.content.toUpperCase()} />
             <Card.Content extra>
               <div className='ui two buttons'>
                 <Button basic color='green'>Pending</Button>

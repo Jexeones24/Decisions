@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DecisionForm from './DecisionForm'
 import DecisionContent from './DecisionContent'
-import Outcome from './Outcome'
+import Outcome from '../Outcomes/Outcome'
 
 
 export default class Decision extends Component {
@@ -25,7 +25,14 @@ export default class Decision extends Component {
       decisionId: decisionId })
   }
 
+  showOutcomeForm = () => {
+    console.log("showing outcome form")
+    // this.setState({ outcomeFormVisible: !this.state.outcomeFormVisible })
+  }
+
   render(){
+    console.log(this.props.currentUser.username)
+    let currentUser = this.props.currentUser.username
     return (
       <div className="decision">
         {this.state.showAll ? <div className="decision-display">
@@ -33,10 +40,12 @@ export default class Decision extends Component {
             decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
             getDecisionId={this.getDecisionId}/>)}
          </div> : <div className="decision-form">
-           <DecisionForm createDecision={this.props.createDecision}/>
+           <DecisionForm currentUser={currentUser.toUpperCase()} createDecision={this.props.createDecision}/>
          </div>}
 
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
+
+          showOutcomeForm={this.props.showOutcomeForm}
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}
           editOutcome={this.props.editOutcome}

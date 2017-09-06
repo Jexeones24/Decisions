@@ -23,9 +23,8 @@ export default class DecisionForm extends Component {
     window.location = '/'
   }
 
-
-  // on submit, take away the form, display the decision really big!
   render(){
+
     return (
       <div className="decision-form">
         <Comment.Group>
@@ -33,15 +32,17 @@ export default class DecisionForm extends Component {
         <Comment>
           <Comment.Avatar src='https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?dpr=2&auto=format&fit=crop&w=1199&h=1493&q=80&cs=tinysrgb&crop=' />
           <Comment.Content>
-           <Comment.Author as='a'>CURRENT USER</Comment.Author>
+           <Comment.Author as='a'><h3>{this.props.currentUser}</h3></Comment.Author>
            <Comment.Metadata>
              <div>5 days ago</div>
            </Comment.Metadata>
            <Comment.Text as='h2'>
-             Give a brief description of what's weighing on your mind...
+             <div>
+               <h3>Give a brief description of what's weighing on your mind...</h3>
+             </div>
            </Comment.Text>
            <Comment.Actions>
-             <Comment.Action>Add Decision</Comment.Action>
+             <Comment.Action></Comment.Action>
            </Comment.Actions>
           </Comment.Content>
         </Comment>

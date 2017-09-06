@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Form } from 'semantic-ui-react'
 
-
 export default class DecisionEditForm extends Component {
   constructor(){
     super();
@@ -17,10 +16,11 @@ export default class DecisionEditForm extends Component {
   }
 
   handleSubmit = (e) => {
-    debugger
     let content = this.state.content
+    let id = this.props.decisionId
     e.preventDefault();
-    this.props.editDecision(content, this.props)
+    console.log(content, id)
+    this.props.editDecision(content, id)
   }
 
   render() {

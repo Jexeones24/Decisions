@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Container from './components/Container'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
 import Signup from './components/Signup'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import DecisionShow from './components/Decisions/DecisionShow'
 import authorize from './authorize'
 import UserAdapter from './UserAdapter'
 import SessionsAdapter from './SessionsAdapter'
+import DecisionAdapter from './adapters/DecisionAdapter'
+import OutcomeAdapter from './adapters/OutcomeAdapter'
 
 
 class App extends Component {
   constructor(){
     super();
 
+    // when i modify an element (decision, outcome, opinion) do i have to re-configure the entire object??? YES fuck
     this.state = {
-      currentUser: {},
-      loggedIn: false
+      currentUser: {id: 1, username: "jexeones"}, // hardcoded
+      loggedIn: false,
+      decisions: [],
+      outcomes: [],
+      decisionObject: {}
     }
   }
+
+  // getuser might go in here too
+  componentDidMount(){
+    console.log(this.state.currentUser)
+    DecisionAdapter.getDecisions(this.state.currentUser)
+      .then( decisions => {
+        this.setState({decisions}, () => {console.log("mounting app", this.state.decisions)})
+      })
+    }
 
   createUser = (user) => {
     UserAdapter.createUser(user)
@@ -32,7 +48,6 @@ class App extends Component {
     )
   }
 
-
   getUser = (username, password) => {
     SessionsAdapter.getUser(username, password)
       .then( data => {
@@ -40,6 +55,37 @@ class App extends Component {
         this.setState({ loggedIn: true, currentUser: data })
       })
     }
+
+  editDecision = (content, id) => {
+    DecisionAdapter.editDecision(content, id)
+      .then( newDecision => {
+        let index =  this.state.decisions.findIndex((d) => d.id === id )
+        return index
+        this.setState({
+          decisions: [
+           ...this.state.decisions.slice(0,index),
+           Object.assign({}, this.state.decisions[index], newDecision),
+           ...this.state.decisions.slice(index+1)
+         ],
+         decisionObject: newDecision
+       }, () => {console.log(newDecision)});
+    })
+  }
+
+  deleteDecision = (id) => {
+    DecisionAdapter.deleteDecision(id)
+      .then( newDecisions => {
+        this.setState({ decisions: newDecisions })
+      }
+    )
+  }
+
+  createOutcome = (content, decisionId) => {
+    debugger
+    OutcomeAdapter.createOutcome(content, decisionId)
+      .then( outcome => this.setState({ outcomes: [...this.state.outcomes, outcome]})
+    )
+  }
 
   logout = () => {
     this.setState({loggedIn: false, currentUser: {}})
@@ -50,7 +96,7 @@ class App extends Component {
   renderContainer = () => {
     return(
       <div>
-        <Container />
+        <Container currentUser={this.state.currentUser} decisions={this.state.decisions}/>
       </div>
     )
   }
@@ -71,6 +117,14 @@ class App extends Component {
     )
   }
 
+  renderShow = (decision) => {
+    return (
+      <DecisionShow history={decision.history} decisionId={decision.match.params.id}
+      editDecision={this.editDecision}
+      deleteDecision={this.deleteDecision}
+      createOutcome={this.createOutcome}/>
+    )
+  }
 
 
   render() {
@@ -78,14 +132,15 @@ class App extends Component {
       <Router>
         <div>
           <header>
-            <h1>LIFE STRIFE</h1>
+            <h1>THESTRUGGLEISREAL</h1>
           </header>
             <Route exact path='/' render={this.renderContainer} />
+            <Route exact path='/decisions/:id' render={this.renderShow} />
             <Route exact path="/login" render={this.renderLogin} />
             <Route exact path="/signup" render={this.renderSignup} />
-          <footer>
+          {/* <footer>
             <h3>LIFESTRIFE Copyright &copy; thestruggleisreal</h3>
-          </footer>
+          </footer> */}
         </div>
       </Router>
     );

@@ -19,8 +19,8 @@ export default class DecisionEditForm extends Component {
     let content = this.state.content
     let id = this.props.decisionId
     e.preventDefault();
-    console.log(content, id)
     this.props.editDecision(content, id)
+    this.setState({ content: '' })
   }
 
   render() {

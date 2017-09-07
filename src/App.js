@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
-import Container from './components/Container'
-import NavBar from './components/NavBar'
+import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import DecisionShow from './components/Decisions/DecisionShow'
-import authorize from './authorize'
 import UserAdapter from './UserAdapter'
-import SessionsAdapter from './SessionsAdapter'
 import DecisionAdapter from './adapters/DecisionAdapter'
 import OutcomeAdapter from './adapters/OutcomeAdapter'
 
@@ -19,8 +16,8 @@ class App extends Component {
 
 
     this.state = {
-      currentUser: {id: 1, username: "jexeones"}, // hardcoded
-      loggedIn: false,
+      currentUser: {id: 2, username: "smorelli"},
+      loggedIn: true,
       decisions: [],
       outcomes: [],
       opinions: [],
@@ -54,13 +51,6 @@ class App extends Component {
     )
   }
 
-  getUser = (username, password) => {
-    SessionsAdapter.getUser(username, password)
-      .then( data => {
-        localStorage.setItem('token', data.jwt)
-        this.setState({ loggedIn: true, currentUser: data })
-      })
-    }
 
   editDecision = (content, id) => {
     DecisionAdapter.editDecision(content, id)
@@ -98,10 +88,10 @@ class App extends Component {
     this.props.history.push("login")
   }
 
-  renderContainer = () => {
+  renderHome = () => {
     return(
       <div>
-        <Container currentUser={this.state.currentUser} decisions={this.state.decisions}/>
+        <Home currentUser={this.state.currentUser} decisions={this.state.decisions}/>
       </div>
     )
   }
@@ -139,17 +129,19 @@ class App extends Component {
 
     return (
       <Router>
-        <div>
+        <div className="content">
           <header>
-            <h1>THESTRUGGLEISREAL</h1>
+            <Link to="/"><h1>THESTRUGGLEISREAL</h1></Link>
           </header>
-            <Route exact path='/' render={this.renderContainer} />
+          <div id="sidebar">
+            <h1>Sidebar</h1>
+          </div>
+          <div className="main">
+            <Route exact path='/' render={this.renderHome} />
             <Route exact path='/decisions/:id' render={this.renderShow} />
             <Route exact path="/login" render={this.renderLogin} />
             <Route exact path="/signup" render={this.renderSignup} />
-          {/* <footer>
-            <h3>LIFESTRIFE Copyright &copy; thestruggleisreal</h3>
-          </footer> */}
+          </div>
         </div>
       </Router>
     );

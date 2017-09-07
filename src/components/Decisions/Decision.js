@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import DecisionForm from './DecisionForm'
-import DecisionContent from './DecisionContent'
 import Outcome from '../Outcomes/Outcome'
 
 
@@ -19,27 +18,36 @@ export default class Decision extends Component {
     this.props.deleteDecision(this.props)
   }
 
-  getDecisionId = (decisionId) => {
-    this.setState({
-      outcomeFormVisible: !this.state.outcomeFormVisible,
-      decisionId: decisionId })
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps)
+    // this.setState({decisionId: nextProps.})
   }
 
+  // getDecisionId = (decisionId) => {
+  //   this.setState({
+  //     outcomeFormVisible: !this.state.outcomeFormVisible,
+  //     decisionId: decisionId })
+  // }
 
   render(){
     let currentUser = this.props.currentUser.username
     return (
-      <div className="decision">
-        {this.state.showAll ? <div className="decision-display">
-          {this.props.decisions.map((decision, idx) => <DecisionContent
-            decision={decision} id={decision.id} key={idx} deleteDecision={this.props.deleteDecision} editDecision={this.props.editDecision}
-            getDecisionId={this.getDecisionId}/>)}
-         </div> : <div className="decision-form">
-           <DecisionForm currentUser={currentUser.toUpperCase()} createDecision={this.props.createDecision}/>
-         </div>}
+      <div>
+      <div className="decision-form">
+        <DecisionForm currentUser={currentUser.toUpperCase()} createDecision={this.props.createDecision}
+        deleteDecision={this.deleteDecision}
+        editDecision={this.editDecision}
+        createOutcome={this.createOutcome}
+        deleteOutcome={this.deleteOutcome}
+        editOutcome={this.editOutcome}
+        createOpinion={this.createOpinion}
+        deleteOpinion={this.deleteOpinion}
+        editOpinion={this.editOpinion}/>
+      </div>
 
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
-          showOutcomeForm={this.props.showOutcomeForm}
+          decision={this.props.decision}
+          // showOutcomeForm={this.props.showOutcomeForm}
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}
           editOutcome={this.props.editOutcome}

@@ -20,8 +20,6 @@ export default class DecisionAdapter {
       .then(resp => resp.json())
   }
 
-
-  // user id is hardcoded until i get auth to work
   static createDecision(decision){
     return fetch(path, {
       method: 'post',

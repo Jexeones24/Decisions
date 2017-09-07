@@ -36,22 +36,41 @@ header, footer {
     text-align: center;
 }
 
-footer {
-    padding: 2em;
-    height: 100%;
+div .decision-show{
+  background-color: grey;
 }
 
-body > .grid {
-   height: 100%;
- }
- .image {
-   margin-top: -100px;
- }
- .column {
-   max-width: 450px;
- }
-
- .decision-card-container {
+.decision-card-container {
   float: left;
   padding: 50px;
+}
+
+.decision-show-title:hover{
+  color: grey;
+}
+
+.outcome:hover{
+  color:red;
+}
+
+.opinion:hover{
+  color:red;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 180px;
+}
+
+.main {
+    position: relative;
+    margin-left: 250px;
 }

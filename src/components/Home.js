@@ -7,7 +7,6 @@ import OutcomeAdapter from '../adapters/OutcomeAdapter'
 import OpinionAdapter from '../adapters/OpinionAdapter'
 import DecisionIndex from './Decisions/DecisionIndex'
 import DecisionShow from './Decisions/DecisionShow'
-import DecisionContent from './Decisions/DecisionContent'
 import { Button } from 'semantic-ui-react'
 
 
@@ -17,7 +16,8 @@ export default class Container extends Component {
     super();
 
     this.state = {
-      decisions: [],
+      // decisions: [],
+      decision: [],
       decisionObject: {},
       outcomes: [],
       opinions: [],
@@ -29,9 +29,7 @@ export default class Container extends Component {
 
   createDecision = (decision) => {
     DecisionAdapter.createDecision(decision)
-      .then( decision => this.setState({
-        decisions: [...this.state.decisions, decision]}
-      )
+      .then( decision => this.setState({ decision }, () => {console.log(this.state.decision)})
     )
   }
 
@@ -103,6 +101,7 @@ export default class Container extends Component {
           {this.state.decisionFormVisible ?
           <div className="decisions">
             <Decision
+              decision={this.state.decision}
               currentUser={this.props.currentUser}
               showOutcomeForm={this.state.outcomeFormVisible}
               decision={this.state.decisionObject} createDecision={this.createDecision}
@@ -120,8 +119,7 @@ export default class Container extends Component {
           </div> :
           <div className="decisions">
             <DecisionIndex
-              decisions={decisionsToDisplay()}
-              backToIndex={this.backToIndex} showDecision={this.showDecision}/>
+              decisions={decisionsToDisplay()}/>
           </div>}
         </article>
       </div>

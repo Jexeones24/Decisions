@@ -7,24 +7,30 @@ export default class OutcomeForm extends Component {
 
     this.state = {
       content: '',
-      hideMe: false
     }
   }
+
+  // need to render decision content above the form
+  // pass decision to here
+  // need the id???
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps)
+  }
+
 
   handleChange = (e) => {
     let content = e.target.value
     this.setState({ content })
   }
 
+
   handleSubmit = (e) => {
     e.preventDefault();
     let content = this.state.content
     let decisionId = this.props.decisionObject.decision.id
+    console.log("handling outcome submit")
     this.props.createOutcome(content, decisionId)
-    this.setState({
-      content: '',
-      hideMe: !this.state.hideMe
-    }, () => { this.props.toggleOutcomeForm(this.state.hideMe)})
+    this.setState({ content: '' })
   }
 
   render(){

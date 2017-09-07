@@ -22,6 +22,7 @@ export default class OutcomeForm extends Component {
     let decisionId = this.props.decisionObject.decision.id
     this.props.createOutcome(content, decisionId)
     this.setState({ content: '' })
+    //how do i hide this form after submit???
   }
 
 
@@ -29,6 +30,7 @@ export default class OutcomeForm extends Component {
     console.log("add outcome", this.state.content, this.props.decisionId)
     this.props.createOutcome(this.state.content, this.props.decisionId)
   }
+
 
   render(){
     return (

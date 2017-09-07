@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Card, Icon, Button } from 'semantic-ui-react'
+import { Card, Icon, Button, Header } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
+
 
 export default class DecisionIndex extends Component {
   constructor(){
@@ -8,7 +10,9 @@ export default class DecisionIndex extends Component {
 
   render(){
     return(
+
       <div>
+        <Header size='huge'>ALL DECISIONS </Header>
         {this.props.decisions.map((decision, idx) =>
           <div className="decision-card-container" key={idx}>
           <Card>

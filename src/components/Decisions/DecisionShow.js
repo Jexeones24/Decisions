@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import DecisionEditForm from './DecisionEditForm'
 import OutcomeForm from '../Outcomes/OutcomeForm'
-import OpinionForm from '../Opinions/OpinionForm'
+import OpinionContainer from '../Opinions/OpinionContainer'
 import DecisionAdapter from '../../adapters/DecisionAdapter'
 import OutcomeAdapter from '../../adapters/OutcomeAdapter'
-import { Grid, Segment, Form, TextArea, Button, Statistic, Header, Icon } from 'semantic-ui-react'
+import { Grid, Segment, Form, Comment, TextArea, Button, Statistic, Header, Icon } from 'semantic-ui-react'
 
 
 export default class DecisionShow extends Component {
@@ -23,12 +23,12 @@ export default class DecisionShow extends Component {
       isMouseIn: false,
       editing: false,
       outcomeFormVisible: false,
-      opinionFormVisible: false
+      opinionFormVisible: false,
+      showValuePrompt: false
     }
   }
 
   createOutcomeFromDecisionShow = (content, decisionId) => {
-    debugger;
     OutcomeAdapter.createOutcome(content, decisionId)
       .then( outcome => {
         let newDecisionObject = Object.assign({},this.state.decisionObject)
@@ -42,15 +42,9 @@ export default class DecisionShow extends Component {
   componentDidMount(){
     DecisionAdapter.showDecision(this.props.decisionId)
       .then( decisionObject => {
-        this.setState({
-        decisionObject
-      }, () => {console.log("decisionObj:", this.state.decisionObject)})
+        this.setState({ decisionObject })
     })
   }
-
-  // componentWillReceiveProps(nextProps){
-  //
-  // }
 
   handleChange = (e) => {
     let content = e.target.value
@@ -63,8 +57,7 @@ export default class DecisionShow extends Component {
     this.setState({ editing: !this.state.editing })
   }
 
-
-  showEditForm = (e) => {
+  showDecisionEdit = (e) => {
     console.log("showing form")
       this.setState({ editing: !this.state.editing })
   }
@@ -79,25 +72,34 @@ export default class DecisionShow extends Component {
     this.setState({ outcomeFormVisible: !this.state.outcomeFormVisible })
   }
 
-  showOpinionForm = (e) => {
-    // how do i get outcome id
-    debugger
+  showOutcomeEditForm = () => {
+    console.log("in outcome edit form")
+  }
 
+  handleOutcomeDelete = () => {
+    console.log("handling outcome delete")
+  }
+
+
+  showOpinionForm = (e) => {
     this.setState({
-      opinionFormVisible: !this.state.opinionFormVisible
+      opinionFormVisible: !this.state.opinionFormVisible,
+      outcomeId: e
     })
   }
 
-  mouseEnter = () => {
-    this.setState({ isMouseIn: !this.state.isMouseIn });
-  }
 
-  mouseLeave = () => {
-    this.setState({
-      isMouseIn: !this.state.isMouseIn,
-      editing: false
-    });
-  }
+  // mouseEnterOutcome = () => {
+  //   console.log("wtf")
+  //   this.setState({ showValuePrompt: !this.state.showValuePrompt })
+  // }
+  //
+  // mouseLeaveOutcome = () => {
+  //   console.log('hahahah')
+  //   this.setState({ showValuePrompt: !this.state.showValuePrompt })
+  // }
+
+  // on hover of outcome box, propmt user to add either risk or reward, send value to opinion form
 
   render(){
     let decisionHTML = () => {
@@ -115,11 +117,11 @@ export default class DecisionShow extends Component {
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
-                <Segment className="decision-show-title" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
+                <Segment className="decision-show-title">
 
                   {this.state.editing ?
                     <Form onSubmit={this.submitEdit.bind(this)}><TextArea placeholder={this.state.decisionObject.decision.content} value={this.state.content}
-                    onChange={this.handleChange.bind(this)} required/><button type="submit" >+</button></Form> : <h3 onClick={this.showEditForm.bind(this)}>{this.state.decisionObject.decision.content}</h3>}
+                    onChange={this.handleChange.bind(this)} required/><button type="submit">+</button></Form> : <h3 onClick={this.showDecisionEdit.bind(this)}>{this.state.decisionObject.decision.content}</h3>}
                     <button onClick={this.handleDelete}>-</button>
                 </Segment>
               </Grid.Column>
@@ -138,25 +140,44 @@ export default class DecisionShow extends Component {
 
 
                 {this.state.outcomeFormVisible ?
-                  <OutcomeForm createOutcome={this.createOutcomeFromDecisionShow} decisionId={this.props.decisionId}/> :
-                  null}
+                  <OutcomeForm
+                    createOutcome={this.createOutcomeFromDecisionShow} decisionId={this.props.decisionId}/> :
+                    null}
 
-                {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} onClick={this.showOpinionForm.bind(this)}>
-                  <Statistic color='green' size='mini' value={idx+1} />
-                  <h4>{o.content}</h4></Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
+                    {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} data-id={o.id} onMouseEnter={this.mouseEnterOutcome} onMouseLeave={this.mouseLeaveOutcome} onClick={this.showOpinionForm.bind(this, o.id)}>
+                    <Statistic color='green' size='mini' value={idx+1} />
+                    <h4>{o.content}</h4>
+                    <button onClick={this.handleOutcomeDelete}>-</button>
+                    <button>opinion</button>
+                    </Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
               </Grid.Column>
-              {/* on hover of outcome, opinion form should appear */}
 
-              {this.state.opinionFormVisible ? <OpinionForm createOpinion={this.props.createOpinion}/> : null }
-              {/* <Grid.Column>
-                <button>+</button>
+              <Grid.Column>
+                <Header as='h2'>
+                  <Icon name='plus'/>
+                  <Header.Content centered>
+                    Pros & Cons
+                    <Header.Subheader>
+                      <Comment.Group>
+                        <Comment>
+                      <Comment.Actions>
+                        <Comment.Action>PRO</Comment.Action>
+                        <Comment.Action>CON</Comment.Action>
+                      </Comment.Actions>
+                    </Comment>
+                  </Comment.Group>
+                    </Header.Subheader>
+                  </Header.Content>
+                </Header>
+                {this.state.opinionFormVisible ? <OpinionContainer
+                outcomeId={this.state.outcomeId} createOpinion={this.props.createOpinion}/> : null }
+
+                {/* <button>+</button>
                 {this.props.opinions.length ?
-                this.props.opinions.map((o, idx) => <Segment className="opinion" key={idx}>{o.content}</Segment>) : <Segment className="opinion">Add opinion</Segment>}
-              </Grid.Column> */}
+                this.props.opinions.map((o, idx) => <Segment className="opinion" key={idx}>{o.content}</Segment>) : <Segment className="opinion">Add opinion</Segment>} */}
+              </Grid.Column>
             </Grid.Row>
           </Grid>
-
-          {/* {this.state.outcomeFormVisible ? <OutcomeForm createOutcome={this.props.createOutcome} decisionObject={this.state.decisionObject}/> : null} */}
         </div>
       )
     }

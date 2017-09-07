@@ -81,6 +81,7 @@ class App extends Component {
     OutcomeAdapter.createOutcome(content, decisionId)
       .then( outcome => this.setState({ outcomes: [...this.state.outcomes, outcome]})
     )
+    // need to store outcome id in state and pass to home
   }
 
   createOpinion = (content, outcomeId, value) => {
@@ -93,7 +94,7 @@ class App extends Component {
     this.props.history.push("login")
   }
 
-  renderHome = () => {
+  renderHome = (params) => {
     return(
       <div>
         <Home currentUser={this.state.currentUser} decisions={this.state.decisions}/>

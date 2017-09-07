@@ -52,7 +52,7 @@ export default class Container extends Component {
     })
   }
 
-
+  //how do i get outcomeId
   createOpinion = (content, outcomeId, value) => {
     OpinionAdapter.createOpinion(content, outcomeId, value)
       .then( opinion => this.setState({ opinions: [...this.state.opinions, opinion]}, () => {console.log(this.state.opinions)})

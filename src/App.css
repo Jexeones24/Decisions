@@ -38,11 +38,16 @@ header, footer {
 
 div .decision-show{
   background-color: white;
+  padding: 50px;
 }
 
 .decision-card-container {
   float: left;
-  padding: 50px;
+  /*padding: 50px;*/
+}
+
+div .decision-index-container{
+  padding: 100px;
 }
 
 .decision-show-title:hover{
@@ -60,14 +65,6 @@ div .decision-show{
 .content {
     position: relative;
     width: 100%;
-}
-
-.sidebar {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 180px;
 }
 
 .main {

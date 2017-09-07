@@ -18,16 +18,15 @@ export default class DecisionForm extends Component {
   }
 
   handleSubmit = (e) => {
+    debugger
     e.preventDefault();
     this.props.createDecision(this.state)
     this.setState({
       content: '',
-      renderOutcomeForm: !this.state.renderOutcomeForm
     })
+    // re-route to show
   }
 
-
-  // change decision form to text --> show buttons for edit, delete
 
   render(){
     return (

@@ -81,6 +81,7 @@ export default class Container extends Component {
   }
 
   showDecisionForm = () => {
+    debugger
     this.setState({ decisionFormVisible: !this.state.decisionFormVisible })
   }
 
@@ -91,14 +92,9 @@ export default class Container extends Component {
 
     return (
       <div className="container">
-        <nav>
-          <ul>
-            <button onClick={this.showDecisionForm}>NEW DECISION</button>
-          </ul>
-        </nav>
-        <article>
+
           {this.state.decisionFormVisible ?
-          <div className="decisions">
+
             <Decision
               decision={this.state.decision}
               currentUser={this.props.currentUser}
@@ -114,13 +110,12 @@ export default class Container extends Component {
               createOpinion={this.createOpinion}
               deleteOpinion={this.deleteOpinion}
               editOpinion={this.editOpinion}
-              opinions={this.state.opinions}/>
-          </div> :
-          <div className="decisions">
-            <DecisionIndex
-              decisions={decisionsToDisplay()}/>
-          </div>}
-        </article>
+              opinions={this.state.opinions}/> :
+            <div className="decision-index-container">
+              <DecisionIndex
+                decisions={decisionsToDisplay()}/>
+            </div>}
+
       </div>
     )
   }

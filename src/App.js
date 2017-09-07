@@ -53,8 +53,6 @@ class App extends Component {
     )
   }
 
-
-  // do i need to edit the object????
   editDecision = (content, id) => {
     DecisionAdapter.editDecision(content, id)
       .then( newDecision => {
@@ -138,9 +136,6 @@ class App extends Component {
           <header>
             <Link to="/"><h1>THESTRUGGLEISREAL</h1></Link>
           </header>
-          <div id="sidebar">
-            <h1>Sidebar</h1>
-          </div>
           <div className="main">
             <Route exact path='/' render={this.renderHome} />
             <Route exact path='/decisions/:id' render={this.renderShow} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import DecisionEditForm from './DecisionEditForm'
 import OutcomeForm from '../Outcomes/OutcomeForm'
+import OpinionForm from '../Opinions/OpinionForm'
 import DecisionAdapter from '../../adapters/DecisionAdapter'
 import { Grid, Segment, Form, TextArea, Button } from 'semantic-ui-react'
 
@@ -68,7 +69,6 @@ export default class DecisionShow extends Component {
   }
 
   showOpinionForm = () => {
-    console.log("showing opinion form")
     this.setState({ opinionFormVisible: !this.state.opinionFormVisible })
   }
 
@@ -111,7 +111,7 @@ export default class DecisionShow extends Component {
 
               {/* on hover of outcome, opinion form should appear */}
 
-
+              {this.state.opinionFormVisible ? <OpinionForm /> : null }
               {/* <Grid.Column>
                 <button>+</button>
                 {this.props.opinions.length ?

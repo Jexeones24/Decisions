@@ -18,14 +18,16 @@ class App extends Component {
     this.state = {
       currentUser: {id: 2, username: "smorelli"},
       loggedIn: true,
+      decisionObject: {
+        outcomes:[],
+        opinions:[]
+      },
       decisions: [],
       outcomes: [],
-      opinions: [],
-      decisionObject: {}
+      opinions: []
     }
   }
 
-  // getuser might go in here too
   componentDidMount(){
     console.log(this.state.currentUser)
     DecisionAdapter.getDecisions(this.state.currentUser)
@@ -83,6 +85,10 @@ class App extends Component {
     )
   }
 
+  createOpinion = (content, outcomeId, value) => {
+    console.log('creating opinion', content, outcomeId, value)
+  }
+
   logout = () => {
     this.setState({loggedIn: false, currentUser: {}})
     localStorage.token = ""
@@ -118,7 +124,8 @@ class App extends Component {
       <DecisionShow history={decision.history} decisionId={decision.match.params.id}
       editDecision={this.editDecision}
       deleteDecision={this.deleteDecision}
-      createOutcome={this.createOutcome} decisions={this.state.decisions} outcomes={this.state.outcomes} opinions={this.state.opinions}/>
+      createOutcome={this.createOutcome}
+      createOpinion={this.createOpinion} decisions={this.state.decisions} outcomes={this.state.outcomes} opinions={this.state.opinions}/>
     )
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Comment, Form } from 'semantic-ui-react'
+import { Form, TextArea } from 'semantic-ui-react'
 
 
 export default class OpinionForm extends Component {
@@ -23,6 +23,7 @@ export default class OpinionForm extends Component {
   }
 
   handleSubmit = (e) => {
+    console.log('here')
     e.preventDefault();
     let outcomeId = this.props.outcomeId
     let content = this.state.content
@@ -34,7 +35,12 @@ export default class OpinionForm extends Component {
   render(){
     return (
       <div className="opinion-form">
-        <Comment.Group>
+        <Form onSubmit={this.handleSubmit}>
+          <TextArea required value={this.state.content}
+          onChange={this.handleChange.bind(this)}/>
+          <button type="submit" >Submit</button>
+        </Form>
+        {/* <Comment.Group>
           <Comment>
             <Comment.Actions>
               <Comment.Action>Risk | Reward</Comment.Action>
@@ -44,7 +50,7 @@ export default class OpinionForm extends Component {
               <Button content='Submit Opinion' labelPosition='left' icon='edit' primary />
             </Form>
           </Comment>
-        </Comment.Group>
+        </Comment.Group> */}
       </div>
     )
   }

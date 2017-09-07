@@ -16,7 +16,6 @@ export default class Container extends Component {
     super();
 
     this.state = {
-      // decisions: [],
       decision: [],
       decisionObject: {},
       outcomes: [],

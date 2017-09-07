@@ -23,12 +23,6 @@ export default class Decision extends Component {
     // this.setState({decisionId: nextProps.})
   }
 
-  // getDecisionId = (decisionId) => {
-  //   this.setState({
-  //     outcomeFormVisible: !this.state.outcomeFormVisible,
-  //     decisionId: decisionId })
-  // }
-
   render(){
     let currentUser = this.props.currentUser.username
     return (
@@ -47,7 +41,6 @@ export default class Decision extends Component {
 
         {this.state.outcomeFormVisible ? <div className="outcome-section"><Outcome
           decision={this.props.decision}
-          // showOutcomeForm={this.props.showOutcomeForm}
           decisionId={this.state.decisionId} createOutcome={this.props.createOutcome}
           deleteOutcome={this.props.deleteOutcome}
           editOutcome={this.props.editOutcome}

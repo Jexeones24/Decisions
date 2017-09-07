@@ -2,50 +2,59 @@ import React, { Component } from 'react'
 import DecisionEditForm from './DecisionEditForm'
 import OutcomeForm from '../Outcomes/OutcomeForm'
 import DecisionAdapter from '../../adapters/DecisionAdapter'
-import { Grid, Menu, Segment, Button, Icon } from 'semantic-ui-react'
+import { Grid, Segment, Form, TextArea, Button } from 'semantic-ui-react'
 
-import { Link } from 'react-router-dom'
 
 export default class DecisionShow extends Component {
   constructor(){
     super();
 
     this.state = {
-      decisionObject: {},
-      decisions: [],
-      outcomes: [],
+      decisionObject: {
+        outcomes:[],
+        opinions:[],
+      },
+      content: '',
       isMouseIn: false,
-      editFormVisible: false,
-      outcomeFormVisible: false
+      editing: false,
+      outcomeFormVisible: false,
+      opinionFormVisible: false
     }
   }
 
   componentDidMount(){
     DecisionAdapter.showDecision(this.props.decisionId)
-      .then( decisionObject => { this.setState({
+      .then( decisionObject => {
+        this.setState({
         decisionObject
-      }, () => {console.log("decisions:", this.props.decisions, "outcomes:", this.props.outcomes, "opinions:", this.props.opinions)})
+      }, () => {console.log("decisionObj:", this.state.decisionObject)})
     })
   }
 
   componentWillReceiveProps(nextProps){
-
-    let newObject = Object.assign({}, this.state.decisionObject);
-    let newDecisions = nextProps.decisions
-    let newOutcomes = nextProps.outcomes
-    newObject.outcomes = newOutcomes;
-    newObject.decisions = newDecisions
-    this.setState({decisionObject: newObject}, () => {console.log(this.state.decisionObject)});
+    let outcomes = [...this.state.decisionObject.outcomes]
+    let newOutcome = nextProps.outcomes[0]
+    let newOutcomes = [...outcomes, newOutcome]
+    console.log("outcomes array", outcomes, "nextProps", newOutcome, "newOutcomes", newOutcomes)
+    // if(this.state.decisionObject.outcomes !== nextProps.outcomes){
 
   }
 
-  handleClick = () => console.log('clicking')
+  handleChange = (e) => {
+    let content = e.target.value
+    this.setState({ content })
+  }
 
-  handleEdit = (e) => {
-    console.log("decision id:", this.props.decisionId)
-      this.setState({
-        editFormVisible: !this.state.editFormVisible
-    }, () => {console.log(this.state)})
+  submitEdit = (e) => {
+    this.props.editDecision(this.state.content, this.props.decisionId)
+    this.setState({ editing: !this.state.editing })
+    //need content to update on page
+  }
+
+
+  showEditForm = (e) => {
+    console.log("showing form")
+      this.setState({ editing: !this.state.editing })
   }
 
   // redirect does not render new content
@@ -54,15 +63,24 @@ export default class DecisionShow extends Component {
     this.props.history.goBack()
   }
 
-  handleAddOutcome = (e) => {
+  showOutcomeForm = () => {
     this.setState({ outcomeFormVisible: !this.state.outcomeFormVisible })
+  }
+
+  showOpinionForm = () => {
+    console.log("showing opinion form")
+    this.setState({ opinionFormVisible: !this.state.opinionFormVisible })
   }
 
   mouseEnter = () => {
     this.setState({ isMouseIn: !this.state.isMouseIn });
   }
+
   mouseLeave = () => {
-    this.setState({ isMouseIn: !this.state.isMouseIn});
+    this.setState({
+      isMouseIn: !this.state.isMouseIn,
+      editing: false
+    });
   }
 
   render(){
@@ -72,40 +90,44 @@ export default class DecisionShow extends Component {
           <Grid columns={3} divided>
             <Grid.Row>
               <Grid.Column>
-                <Segment className="decision-show-title" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}><h3>{this.state.decisionObject.decision.content}</h3>{this.state.isMouseIn &&
-                  <div>
-                  <Button icon onClick={this.handleEdit.bind(this)}>
-                    <Icon name='pencil' />
-                  </Button>
-                  <Button icon onClick={this.handleDelete.bind(this)}>
-                    <Icon name='trash' />
-                  </Button></div>}
+                <Segment className="decision-show-title" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
+
+                  {this.state.editing ?
+                    <Form onSubmit={this.submitEdit.bind(this)}><TextArea placeholder={this.state.decisionObject.decision.content} value={this.state.content}
+                    onChange={this.handleChange.bind(this)} required/><button type="submit" >+</button></Form> : <h3 onClick={this.showEditForm.bind(this)}>{this.state.decisionObject.decision.content}</h3>}
+
                 </Segment>
               </Grid.Column>
 
               <Grid.Column>
-                {this.props.outcomes.length ? this.props.outcomes.map((o, idx) => <Segment className="outcome" key={idx}>{o.content}</Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
+                <button onClick={this.showOutcomeForm}>+</button>
+
+                {this.state.outcomeFormVisible ?
+                  <OutcomeForm createOutcome={this.props.createOutcome} decisionId={this.props.decisionId}/> :
+                  null}
+
+                {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} onClick={this.showOpinionForm}>{o.content}</Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
               </Grid.Column>
 
-              <Grid.Column>
+              {/* on hover of outcome, opinion form should appear */}
+
+
+              {/* <Grid.Column>
+                <button>+</button>
                 {this.props.opinions.length ?
                 this.props.opinions.map((o, idx) => <Segment className="opinion" key={idx}>{o.content}</Segment>) : <Segment className="opinion">Add opinion</Segment>}
-              </Grid.Column>
+              </Grid.Column> */}
             </Grid.Row>
           </Grid>
 
-          {this.state.editFormVisible ? <DecisionEditForm
-          content={this.state.content}
-          decisionId={this.state.decisionObject.decision.id} editDecision={this.props.editDecision} decision={this.props.decision}/> : null}
-
-          {this.state.outcomeFormVisible ? <OutcomeForm createOutcome={this.props.createOutcome} decisionObject={this.state.decisionObject}/> : null}
+          {/* {this.state.outcomeFormVisible ? <OutcomeForm createOutcome={this.props.createOutcome} decisionObject={this.state.decisionObject}/> : null} */}
         </div>
       )
     }
 
     return (
       <div className="decision-show">
-        {this.state.decisionObject.decision ? decisionHTML() : 'empty'}
+        {this.state.decisionObject.decision ? decisionHTML() : []}
       </div>
     )
   }

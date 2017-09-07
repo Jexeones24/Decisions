@@ -52,6 +52,7 @@ class App extends Component {
   }
 
 
+  // do i need to edit the object????
   editDecision = (content, id) => {
     DecisionAdapter.editDecision(content, id)
       .then( newDecision => {
@@ -113,9 +114,6 @@ class App extends Component {
   }
 
   renderShow = (decision) => {
-    // show needs to know what to show
-    // figure out which decision
-    // pass that decision to decision show
     return (
       <DecisionShow history={decision.history} decisionId={decision.match.params.id}
       editDecision={this.editDecision}

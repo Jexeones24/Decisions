@@ -7,6 +7,7 @@ export default class OpinionContainer extends Component {
   }
 
   render(){
+    console.log(this.props)
     return(
       <div className="opinion-container">
 

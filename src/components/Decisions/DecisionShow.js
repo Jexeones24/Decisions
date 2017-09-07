@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import DecisionEditForm from './DecisionEditForm'
 import OutcomeForm from '../Outcomes/OutcomeForm'
+import OutcomeEditForm from '../Outcomes/OutcomeEditForm'
 import OpinionContainer from '../Opinions/OpinionContainer'
 import DecisionAdapter from '../../adapters/DecisionAdapter'
 import OutcomeAdapter from '../../adapters/OutcomeAdapter'
-import { Grid, Segment, Form, Comment, TextArea, Button, Statistic, Header, Icon } from 'semantic-ui-react'
+import { Grid, Segment, Form, TextArea, Button, Statistic, Header, Icon } from 'semantic-ui-react'
 
 
 export default class DecisionShow extends Component {
@@ -20,8 +21,10 @@ export default class DecisionShow extends Component {
 
       content: '',
       outcomeId: null,
+      opinionValue: '',
       isMouseIn: false,
       editing: false,
+      outcomeEditing: false,
       outcomeFormVisible: false,
       opinionFormVisible: false,
       showValuePrompt: false
@@ -72,8 +75,10 @@ export default class DecisionShow extends Component {
     this.setState({ outcomeFormVisible: !this.state.outcomeFormVisible })
   }
 
-  showOutcomeEditForm = () => {
+  handleOutcomeEdit = () => {
     console.log("in outcome edit form")
+    // replace outcome content with edit form
+
   }
 
   handleOutcomeDelete = () => {
@@ -81,25 +86,14 @@ export default class DecisionShow extends Component {
   }
 
 
-  showOpinionForm = (e) => {
+  showOpinionForm = (e, value) => {
+    console.log(e, value)
     this.setState({
       opinionFormVisible: !this.state.opinionFormVisible,
-      outcomeId: e
+      outcomeId: e,
+      opinionValue: value
     })
   }
-
-
-  // mouseEnterOutcome = () => {
-  //   console.log("wtf")
-  //   this.setState({ showValuePrompt: !this.state.showValuePrompt })
-  // }
-  //
-  // mouseLeaveOutcome = () => {
-  //   console.log('hahahah')
-  //   this.setState({ showValuePrompt: !this.state.showValuePrompt })
-  // }
-
-  // on hover of outcome box, propmt user to add either risk or reward, send value to opinion form
 
   render(){
     let decisionHTML = () => {
@@ -111,10 +105,7 @@ export default class DecisionShow extends Component {
                 <Header as='h2'>
                   <Icon/>
                   <Header.Content>
-                    YOUR DECISION
-                    <Header.Subheader>
-                      Click to edit
-                    </Header.Subheader>
+                    CURRENT DECISION
                   </Header.Content>
                 </Header>
                 <Segment className="decision-show-title">
@@ -131,12 +122,13 @@ export default class DecisionShow extends Component {
                   <Icon name='balance' />
                   <Header.Content>
                     POSSIBLE OUTCOMES
-                    <Header.Subheader>
-                      Click outcome to add risk or reward
+                    <Header.Subheader onClick={this.showOutcomeForm}>
+                      Add New Outcome
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
-                <button onClick={this.showOutcomeForm}>add new</button>
+
+                <OutcomeEditForm />
 
 
                 {this.state.outcomeFormVisible ?
@@ -144,11 +136,12 @@ export default class DecisionShow extends Component {
                     createOutcome={this.createOutcomeFromDecisionShow} decisionId={this.props.decisionId}/> :
                     null}
 
-                    {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} data-id={o.id} onMouseEnter={this.mouseEnterOutcome} onMouseLeave={this.mouseLeaveOutcome} onClick={this.showOpinionForm.bind(this, o.id)}>
+                    {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} data-id={o.id}  onClick={this.handleOutcomeEdit}>
                     <Statistic color='green' size='mini' value={idx+1} />
                     <h4>{o.content}</h4>
-                    <button onClick={this.handleOutcomeDelete}>-</button>
-                    <button>opinion</button>
+                    <button data-id={o.id} onClick={this.handleOutcomeDelete.bind(this, o.id)}>-</button>
+                    <button data-id={o.id} onClick={this.showOpinionForm.bind(this, o.id, true)} value="true">pro</button>
+                    <button onClick={this.showOpinionForm.bind(this, o.id, false)} value="false">con</button>
                     </Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
               </Grid.Column>
 
@@ -157,22 +150,14 @@ export default class DecisionShow extends Component {
                   <Icon name='plus'/>
                   <Header.Content centered>
                     Pros & Cons
-                    <Header.Subheader>
-                      <Comment.Group>
-                        <Comment>
-                      <Comment.Actions>
-                        <Comment.Action>PRO</Comment.Action>
-                        <Comment.Action>CON</Comment.Action>
-                      </Comment.Actions>
-                    </Comment>
-                  </Comment.Group>
-                    </Header.Subheader>
                   </Header.Content>
                 </Header>
+
                 {this.state.opinionFormVisible ? <OpinionContainer
+                opinionValue={this.state.opinionValue}
                 outcomeId={this.state.outcomeId} createOpinion={this.props.createOpinion}/> : null }
 
-                {/* <button>+</button>
+                {/*
                 {this.props.opinions.length ?
                 this.props.opinions.map((o, idx) => <Segment className="opinion" key={idx}>{o.content}</Segment>) : <Segment className="opinion">Add opinion</Segment>} */}
               </Grid.Column>

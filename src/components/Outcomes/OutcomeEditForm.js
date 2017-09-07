@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, TextArea } from 'semantic-ui-react'
 
 
 export default class OutcomeEditForm extends Component {
@@ -16,7 +16,7 @@ export default class OutcomeEditForm extends Component {
     this.setState({ content })
   }
 
-  handleSubmit = (e) => {
+  submitEdit = (e) => {
     let content = this.state.content
     let id = this.props.outcome.id
     e.preventDefault();
@@ -26,10 +26,8 @@ export default class OutcomeEditForm extends Component {
   render() {
     return (
       <div className="outcome-edit-form">
-        <Form reply onSubmit={this.handleSubmit.bind(this)}>
-          <Form.TextArea type="text" placeholder="Edit Outcome" value={this.state.content} onChange={this.handleChange} name="content"/>
-          <Button content='Submit' labelPosition='left' icon='edit' primary />
-        </Form>
+        <Form onSubmit={this.submitEdit.bind(this)}><TextArea placeholder="" value={this.state.content}
+        onChange={this.handleChange.bind(this)} required/><button type="submit">+</button></Form>
       </div>
     )
   }

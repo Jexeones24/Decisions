@@ -7,8 +7,7 @@ export default class OpinionForm extends Component {
     super();
 
     this.state = {
-      content: '',
-      value: null
+      content: ''
     }
   }
 

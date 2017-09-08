@@ -26,7 +26,7 @@ export default class OutcomeEditForm extends Component {
   render() {
     return (
       <div className="outcome-edit-form">
-        <Form onSubmit={this.submitEdit.bind(this)}><TextArea placeholder="" value={this.state.content}
+        <Form onSubmit={this.submitEdit.bind(this)}><TextArea placeholder="Edit Outcome" value={this.state.content}
         onChange={this.handleChange.bind(this)} required/><button type="submit">+</button></Form>
       </div>
     )

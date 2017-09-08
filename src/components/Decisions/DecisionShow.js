@@ -15,6 +15,7 @@ export default class DecisionShow extends Component {
     this.state = {
 
       decisionObject: {
+        content: '',
         outcomes:[],
         opinions:[],
       },
@@ -35,12 +36,26 @@ export default class DecisionShow extends Component {
     OutcomeAdapter.createOutcome(content, decisionId)
       .then( outcome => {
         let newDecisionObject = Object.assign({},this.state.decisionObject)
+
         let newOutcomes = [...newDecisionObject.outcomes, outcome]
         newDecisionObject.outcomes = newOutcomes
         this.setState({ decisionObject:newDecisionObject })
       }
     )
   }
+
+
+  // updating, but not re-rendering
+  submitEdit = (content, decisionId) => {
+    DecisionAdapter.editDecision(this.state.content, this.props.decisionId)
+      .then( decision => {
+        let newDecisionObject = Object.assign({},this.state.decisionObject)
+        newDecisionObject.decision = decision
+        this.setState({ decisionObject:newDecisionObject }, () => {console.log(this.state.decisionObject)})
+      }
+    )
+  }
+
 
   componentDidMount(){
     DecisionAdapter.showDecision(this.props.decisionId)
@@ -54,11 +69,6 @@ export default class DecisionShow extends Component {
     this.setState({ content })
   }
 
-  //need content to update on page
-  submitEdit = (e) => {
-    this.props.editDecision(this.state.content, this.props.decisionId)
-    this.setState({ editing: !this.state.editing })
-  }
 
   showDecisionEdit = (e) => {
     console.log("showing form")
@@ -142,13 +152,13 @@ export default class DecisionShow extends Component {
                     <button data-id={o.id} onClick={this.handleOutcomeDelete.bind(this, o.id)}>-</button>
                     <button data-id={o.id} onClick={this.showOpinionForm.bind(this, o.id, true)} value="true">pro</button>
                     <button onClick={this.showOpinionForm.bind(this, o.id, false)} value="false">con</button>
-                    </Segment>) : <Segment className="outcome" onClick={this.handleAddOutcome.bind(this)}>Add outcome</Segment>}
+                    </Segment>) : <Segment className="outcome">Add outcome</Segment>}
               </Grid.Column>
 
               <Grid.Column>
                 <Header as='h2'>
                   <Icon name='plus'/>
-                  <Header.Content centered>
+                  <Header.Content>
                     Pros & Cons
                   </Header.Content>
                 </Header>

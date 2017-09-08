@@ -146,9 +146,9 @@ export default class DecisionShow extends Component {
                     createOutcome={this.createOutcomeFromDecisionShow} decisionId={this.props.decisionId}/> :
                     null}
 
-                    {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} data-id={o.id}  onClick={this.handleOutcomeEdit}>
+                    {this.state.decisionObject.outcomes ? this.state.decisionObject.outcomes.map((o, idx) => <Segment className="outcome" key={idx} data-id={o.id}>
                     <Statistic color='green' size='mini' value={idx+1} />
-                    <h4>{o.content}</h4>
+                    <h4 onClick={this.handleOutcomeEdit}>{o.content}</h4>
                     <button data-id={o.id} onClick={this.handleOutcomeDelete.bind(this, o.id)}>-</button>
                     <button data-id={o.id} onClick={this.showOpinionForm.bind(this, o.id, true)} value="true">pro</button>
                     <button onClick={this.showOpinionForm.bind(this, o.id, false)} value="false">con</button>
